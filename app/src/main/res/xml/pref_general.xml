@@ -1,0 +1,17 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="pref_key_auto_update"
+        android:title="@string/pref_title_auto_update" />
+
+
+    <EditTextPreference
+        android:key="pref_key_server_address"
+        android:title="@string/pref_title_server_address"
+        android:defaultValue="@string/pref_default_server_address"
+        android:selectAllOnFocus="true"
+        android:inputType="textUri"
+        android:singleLine="true"
+        android:maxLines="1" />
+</PreferenceScreen>

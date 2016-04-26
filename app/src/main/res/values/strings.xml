@@ -1,0 +1,78 @@
+<resources>
+    <string name="facebook_app_id">2007211102837293</string>
+    <string name="app_name">Portfolios</string>
+    <string name="action_profile">Profile</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_about">About</string>
+    <string name="action_add">Add</string>
+    <string name="action_save">Save</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_edit">Edit</string>
+    <string name="content_description_sailing">Sailing</string>
+    <string name="content_description_boating">Boating</string>
+    <string name="content_description_wechat_sign_in">Wechat sign in</string>
+    <string name="content_description_weibo_sign_in">Weibo sign in</string>
+    <string name="content_description_navigation">boating</string>
+    <string name="title_activity_about">AboutActivity</string>
+    <string name="title_activity_create_portfolio">Create Portfolio</string>
+    <string name="title_activity_edit_portfolio">Edit Portfolio</string>
+    <string name="title_activity_create_list">Create List</string>
+    <string name="title_activity_profile">Profile</string>
+    <string name="title_activity_main">Portfolios</string>
+    <string name="title_activity_portfolio">Portfolio</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_add_transaction">Add Transaction</string>
+    <string name="page_title_portfolio_holdings">Holdings</string>
+    <string name="page_title_portfolio_transactions">Transactions</string>
+    <string name="label_portfolio_list_type">Type:</string>
+    <string name="label_portfolio_list_name">Name:</string>
+    <string name="label_portfolio_list_asset_class">Primary asset class:</string>
+    <string name="label_portfolio_list_description">Description:</string>
+    <string name="label_portfolio_list_benchmark">Benchmark:</string>
+    <string name="label_portfolio_list_currency">Currency:</string>
+    <string name="label_portfolio_list_copy_securities_from">Copy securities from:</string>
+    <string name="hint_portfolio_list_name">Aggressive</string>
+    <string name="label_sign_in">Sign in for portfolio services</string>
+    <string name="label_explore_as_a_guest">Explore as a guest</string>
+    <string name="label_profile_user_id">User ID:</string>
+    <string name="label_profile_screen_name">Screen name:</string>
+    <string name="label_profile_location">Location:</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_image">Portfolios Management</string>
+    <string-array name="portfolio_list_types">
+        <item>Portfolio</item>
+        <item>List</item>
+    </string-array>
+    <string-array name="portfolio_list_assert_classes">
+        <item>Equity</item>
+        <item>Fixed Income</item>
+    </string-array>
+    <string-array name="transaction_types">
+        <item>Buying</item>
+        <item>Selling</item>
+        <item>ShortSelling</item>
+        <item>shortCovering</item>
+    </string-array>
+    <string-array name="portfolio_list_currencies">
+        <item>CNY</item>
+        <item>USD</item>
+        <item>JPY</item>
+        <item>EUR</item>
+        <item>GBP</item>
+    </string-array>
+    <string name="pref_header_general">General</string>
+    <string name="pref_header_notifications">Notifications</string>
+    <string name="pref_title_auto_update">Auto update</string>
+    <string name="pref_title_server_address">Server address</string>
+    <string name="pref_default_server_address">https://grpm.applinzi.com</string>
+    <string name="pref_title_notification_frequency">Notification frequency</string>
+    <string-array name="pref_notification_frequency_titles">
+        <item>Daily</item>
+        <item>Weekly</item>
+    </string-array>
+    <string-array name="pref_notification_frequency_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+</resources>

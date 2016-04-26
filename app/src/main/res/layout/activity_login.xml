@@ -1,0 +1,101 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/sailing_blur"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:weightSum="1"
+    tools:context=".LoginActivity">
+
+    <ImageView
+        android:id="@+id/image_view_logo"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_margin="8dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/content_description_boating"
+        android:src="@drawable/boating_white" />
+
+    <TextView
+        android:id="@+id/text_view_sign_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="@string/label_sign_in"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@android:color/white" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:weightSum="6">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/image_button_wechat_sign_In"
+                android:layout_width="196dp"
+                android:layout_height="28dp"
+                android:layout_margin="8dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/content_description_wechat_sign_in"
+                android:padding="0dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/btn_wechat_signin" />
+
+
+            <ImageButton
+                android:id="@+id/image_button_weibo_sign_in"
+                android:layout_width="196dp"
+                android:layout_height="28dp"
+                android:layout_margin="8dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/content_description_weibo_sign_in"
+                android:padding="0dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/btn_weibo_signin" />
+
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/image_button_facebook_sign_in"
+                android:layout_width="196dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/button_explore_as_a_guest"
+                android:layout_width="196dp"
+                android:layout_height="28dp"
+                android:layout_margin="8dp"
+                android:background="?android:selectableItemBackground"
+                android:text="@string/label_explore_as_a_guest"
+                android:textAllCaps="false"
+                android:textAppearance="@android:style/TextAppearance.Widget.Button"
+                android:textColor="@android:color/white"
+                android:theme="@style/Widget.AppCompat.Button.Borderless.Colored" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
