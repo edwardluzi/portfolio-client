@@ -56,5 +56,6 @@ task copyNativeLibs(type: Copy) {
 }
 
 tasks.withType(JavaCompile) {
-    compileTask -> compileTask.dependsOn copyNativeLibs
+    compileTask -> //noinspection GroovyAssignabilityCheck
+        compileTask.dependsOn copyNativeLibs
 }
