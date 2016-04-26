@@ -2,7 +2,6 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -20,7 +19,6 @@
     <style name="PortfolioTabLayout" parent="Widget.Design.TabLayout">
         <item name="tabIndicatorColor">#0000FF</item>
     </style>
-
 
     <style name="textAppearanceSuperSmall" parent="TextAppearance.AppCompat.Small">
         <item name="android:textSize">12sp</item>

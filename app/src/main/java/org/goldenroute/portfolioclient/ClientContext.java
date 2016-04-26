@@ -24,16 +24,4 @@ public class ClientContext extends Application {
     public void setAccount(Account mAccount) {
         this.mAccount = mAccount;
     }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-    }
-
-    @Override
-    public void onTerminate() {
-        super.onTerminate();
-    }
-
-
 }

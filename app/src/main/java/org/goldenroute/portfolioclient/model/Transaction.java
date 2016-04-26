@@ -3,6 +3,7 @@ package org.goldenroute.portfolioclient.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
+@SuppressWarnings("InstanceVariableNamingConvention")
 public class Transaction {
 
     public enum Type {

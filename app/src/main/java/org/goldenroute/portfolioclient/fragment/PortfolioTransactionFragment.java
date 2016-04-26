@@ -32,8 +32,6 @@ import org.goldenroute.portfolioclient.rest.RestOperations;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -213,18 +211,18 @@ public class PortfolioTransactionFragment extends RefreshableFragment implements
     }
 
     public class DeleteTransactionTask extends RestAsyncTask<Void, Void, Boolean> {
-        private Set<Long> tids;
+        private Set<Long> mTransactionIds;
         private Portfolio mReturned;
 
         public DeleteTransactionTask(Activity activity, Set<Long> tids) {
             super(activity, true);
-            this.tids = tids;
+            this.mTransactionIds = tids;
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
             try {
-                Call<Portfolio> call = RestOperations.getInstance().getTransactionService().delete(mPortfolioId,   TextUtils.join(",",this.tids ));
+                Call<Portfolio> call = RestOperations.getInstance().getTransactionService().delete(mPortfolioId, TextUtils.join(",", this.mTransactionIds));
                 mReturned = call.execute().body();
                 if (mReturned != null) {
                     getClientContext().getAccount().addOrUpdate(mReturned);
@@ -243,7 +241,6 @@ public class PortfolioTransactionFragment extends RefreshableFragment implements
             mTransactionListAdapter.removeSelection();
 
             if (success && mReturned != null) {
-
                 refresh();
             } else {
                 Toast.makeText(this.getParentActivity(), "Failed to operate transaction.", Toast.LENGTH_LONG).show();

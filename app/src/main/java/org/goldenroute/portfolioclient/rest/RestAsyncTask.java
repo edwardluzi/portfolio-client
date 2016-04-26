@@ -15,13 +15,13 @@ public abstract class RestAsyncTask<Params, Progress, Result> extends AsyncTask<
         return mParentActivity;
     }
 
-    protected ProgressDialog getmProgressDialog() {
+    protected ProgressDialog getProgressDialog() {
         return mProgressDialog;
     }
 
     protected RestAsyncTask(Activity activity, boolean showDialog) {
         this.mParentActivity = activity;
-        if(showDialog) {
+        if (showDialog) {
             this.mProgressDialog = new ProgressDialog(activity);
             this.mProgressDialog.setCancelable(false);
             this.mProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
@@ -36,7 +36,7 @@ public abstract class RestAsyncTask<Params, Progress, Result> extends AsyncTask<
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        if(mProgressDialog != null) {
+        if (mProgressDialog != null) {
             this.mProgressDialog.setMessage("Please waiting...");
             this.mProgressDialog.show();
         }

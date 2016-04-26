@@ -14,6 +14,8 @@ import com.squareup.picasso.Picasso;
 import org.goldenroute.portfolioclient.model.Account;
 import org.goldenroute.portfolioclient.model.Profile;
 
+import java.util.Locale;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -43,8 +45,6 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
-
-
     }
 
     private ClientContext getClientContext() {
@@ -56,14 +56,14 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        Account account =getClientContext().getAccount();
+        Account account = getClientContext().getAccount();
 
-        if(account != null)
-        {
+        if (account != null) {
             Profile profile = account.getProfile();
-            mEditTextUserId.setText(profile.getId().toString());
+
+            mEditTextUserId.setText(String.format(Locale.getDefault(), "%d", profile.getId()));
             mEditTextScreenName.setText(profile.getScreenName());
-            mEditTextLocation.setText(profile.getLocaltion());
+            mEditTextLocation.setText(profile.getLocation());
 
             Picasso.with(this)
                     .load(profile.getAvatarUrl())
@@ -72,8 +72,6 @@ public class ProfileActivity extends AppCompatActivity {
                     .into(mImageViewAvatar);
         }
     }
-
-
 
 
     private class HttpRequestTask extends AsyncTask<Void, Void, Account> {
@@ -85,7 +83,8 @@ public class ProfileActivity extends AppCompatActivity {
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 
                 Account account = restTemplate.getForObject(url, Account.class);
-*/                return null;
+*/
+                return null;
             } catch (Exception e) {
                 Log.e(TAG, e.getMessage(), e);
             }
@@ -96,7 +95,7 @@ public class ProfileActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Account greeting) {
 
-       //     ProfileActivity.this.setTitle(greeting.getSocialId());
+            //     ProfileActivity.this.setTitle(greeting.getSocialId());
             //       TextView greetingIdText = (TextView) findViewById(R.id.id_value);
             //     TextView greetingContentText = (TextView) findViewById(R.id.content_value);
             //    greetingIdText.setText(greeting.getId());

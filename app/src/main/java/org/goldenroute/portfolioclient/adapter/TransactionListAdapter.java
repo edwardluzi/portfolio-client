@@ -4,48 +4,44 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import org.goldenroute.portfolioclient.R;
-import org.goldenroute.portfolioclient.model.Holding;
 import org.goldenroute.portfolioclient.model.Transaction;
-import org.goldenroute.portfolioclient.utils.PriceFormater;
+import org.goldenroute.portfolioclient.utils.PriceFormatter;
 
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
 public class TransactionListAdapter extends ToggleAdapter {
-    private Activity activity;
-    private List<Transaction> transactions;
+    private Activity mActivity;
+    private List<Transaction> mTransactions;
     private SimpleDateFormat mDateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
 
     public TransactionListAdapter(Activity activity, List<Transaction> transactions) {
         super();
-        this.activity = activity;
-        this.transactions = transactions;
+        this.mActivity = activity;
+        this.mTransactions = transactions;
     }
 
     public List<Transaction> getData() {
-        return transactions;
+        return mTransactions;
     }
 
     @Override
     public int getCount() {
-        return transactions.size();
+        return mTransactions.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return transactions.get(position);
+        return mTransactions.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return transactions.get(position).getId();
+        return mTransactions.get(position).getId();
     }
 
     @Override
@@ -54,7 +50,7 @@ public class TransactionListAdapter extends ToggleAdapter {
         final ViewHolder viewHolder;
 
         if (convertView == null) {
-            LayoutInflater inflater = activity.getLayoutInflater();
+            LayoutInflater inflater = mActivity.getLayoutInflater();
             convertView = inflater.inflate(R.layout.list_item_transaction, null);
 
             viewHolder = new ViewHolder(
@@ -72,22 +68,22 @@ public class TransactionListAdapter extends ToggleAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        Transaction summary = transactions.get(position);
+        Transaction summary = mTransactions.get(position);
 
         viewHolder.getTextViewDate().setText(mDateFormatter.format(summary.getDate()));
 
-        if (position > 0 && transactions.get(position - 1).getDate().compareTo(summary.getDate()) == 0) {
+        if (position > 0 && mTransactions.get(position - 1).getDate().compareTo(summary.getDate()) == 0) {
             viewHolder.getTextViewDate().setVisibility(View.GONE);
         }
 
         viewHolder.getTextViewTicker().setText(summary.getTicker());
         viewHolder.getTextViewType().setText(summary.getType().toString());
 
-        PriceFormater.setDecimalText(viewHolder.getTextViewAmount(), summary.getAmount());
-        PriceFormater.setDecimalText(viewHolder.getTextViewPrice(), summary.getPrice());
-        PriceFormater.setDecimalText(viewHolder.getTextViewCommission(), summary.getCommission());
-        PriceFormater.setDecimalText(viewHolder.getTextViewOtherCharge(), summary.getOtherCharges());
-        PriceFormater.setDecimalText(viewHolder.getTextViewTotal(), summary.getTotal());
+        PriceFormatter.setDecimalText(viewHolder.getTextViewAmount(), summary.getAmount());
+        PriceFormatter.setDecimalText(viewHolder.getTextViewPrice(), summary.getPrice());
+        PriceFormatter.setDecimalText(viewHolder.getTextViewCommission(), summary.getCommission());
+        PriceFormatter.setDecimalText(viewHolder.getTextViewOtherCharge(), summary.getOtherCharges());
+        PriceFormatter.setDecimalText(viewHolder.getTextViewTotal(), summary.getTotal());
 
         return convertView;
     }

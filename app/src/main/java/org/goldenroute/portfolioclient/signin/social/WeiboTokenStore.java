@@ -19,12 +19,12 @@ public class WeiboTokenStore {
             return;
         }
 
-        SharedPreferences.Editor editor =  PreferenceManager.getDefaultSharedPreferences(context).edit();
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.putString(KEY_UID, token.getUid());
         editor.putString(KEY_ACCESS_TOKEN, token.getToken());
         editor.putString(KEY_REFRESH_TOKEN, token.getRefreshToken());
         editor.putLong(KEY_EXPIRES_IN, token.getExpiresTime());
-        editor.commit();
+        editor.apply();
     }
 
     public static Oauth2AccessToken readAccessToken(Context context) {
@@ -32,7 +32,7 @@ public class WeiboTokenStore {
             return null;
         }
 
-        SharedPreferences sharedPreferences =PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         Oauth2AccessToken token = new Oauth2AccessToken();
 
         token.setUid(sharedPreferences.getString(KEY_UID, ""));
@@ -48,8 +48,8 @@ public class WeiboTokenStore {
             return;
         }
 
-        SharedPreferences.Editor editor =  PreferenceManager.getDefaultSharedPreferences(context).edit();
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.clear();
-        editor.commit();
+        editor.apply();
     }
 }

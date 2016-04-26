@@ -117,8 +117,7 @@ public class PortfolioActivity extends AppCompatActivity implements ViewPager.On
             if (resultCode == Activity.RESULT_OK) {
                 refresh();
             }
-        }
-        else if (requestCode == RC_EDIT) {
+        } else if (requestCode == RC_EDIT) {
             mToolbar.post(new Runnable() {
                 public void run() {
                     setTitle();
@@ -148,7 +147,7 @@ public class PortfolioActivity extends AppCompatActivity implements ViewPager.On
 
 
     public class PortfolioFragmentPagerAdapter extends FragmentPagerAdapter {
-        private int NUM_ITEMS = 2;
+        private static final int NUM_ITEMS = 2;
 
         public PortfolioFragmentPagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
@@ -171,14 +170,14 @@ public class PortfolioActivity extends AppCompatActivity implements ViewPager.On
             }
         }
 
-        private int[] pageTitleResId = {
+        private final int[] mPageTitleResourceIds = {
                 R.string.page_title_portfolio_holdings,
                 R.string.page_title_portfolio_transactions
         };
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return PortfolioActivity.this.getString(pageTitleResId[position]);
+            return PortfolioActivity.this.getString(mPageTitleResourceIds[position]);
         }
     }
 }

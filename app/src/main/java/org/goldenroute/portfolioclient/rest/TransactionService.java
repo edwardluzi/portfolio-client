@@ -3,8 +3,6 @@ package org.goldenroute.portfolioclient.rest;
 import org.goldenroute.portfolioclient.model.Portfolio;
 import org.goldenroute.portfolioclient.model.Transaction;
 
-import java.util.Set;
-
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;

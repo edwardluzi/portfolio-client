@@ -1,26 +1,14 @@
 package org.goldenroute.portfolioclient.fragment;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import org.goldenroute.portfolioclient.AboutActivity;
-import org.goldenroute.portfolioclient.PortfolioActivity;
 import org.goldenroute.portfolioclient.ProfileActivity;
 import org.goldenroute.portfolioclient.R;
 import org.goldenroute.portfolioclient.SettingsActivity;
-import org.goldenroute.portfolioclient.model.Account;
-import org.goldenroute.portfolioclient.model.Portfolio;
-import org.goldenroute.portfolioclient.rest.RestAsyncTask;
-import org.goldenroute.portfolioclient.rest.RestOperations;
-
-import java.io.IOException;
-
-import retrofit2.Call;
-import retrofit2.Response;
 
 public abstract class MainBaseFragment extends RefreshableFragment {
 
@@ -45,5 +33,16 @@ public abstract class MainBaseFragment extends RefreshableFragment {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setTitle(String title) {
+        AppCompatActivity activity = ((AppCompatActivity) getActivity());
+        if (activity != null) {
+            activity.setTitle(title);
+            ActionBar toolbar = activity.getSupportActionBar();
+            if (toolbar != null) {
+                toolbar.setTitle(title);
+            }
+        }
     }
 }

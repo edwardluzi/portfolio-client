@@ -2,6 +2,7 @@ package org.goldenroute.portfolioclient.model;
 
 import java.math.BigDecimal;
 
+@SuppressWarnings("InstanceVariableNamingConvention")
 public class Holding {
 
     private Long id;

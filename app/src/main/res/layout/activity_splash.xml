@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/sailing"
-        android:scaleType="fitCenter"
-        android:contentDescription="@string/content_description_sailing" />
+        android:contentDescription="@string/content_description_sailing"
+        android:scaleType="fitCenter" />
 
 </android.support.design.widget.CoordinatorLayout>

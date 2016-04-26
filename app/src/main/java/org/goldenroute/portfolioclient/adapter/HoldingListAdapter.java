@@ -1,7 +1,6 @@
 package org.goldenroute.portfolioclient.adapter;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,40 +9,37 @@ import android.widget.TextView;
 
 import org.goldenroute.portfolioclient.R;
 import org.goldenroute.portfolioclient.model.Holding;
-import org.goldenroute.portfolioclient.model.Portfolio;
-import org.goldenroute.portfolioclient.utils.PriceFormater;
+import org.goldenroute.portfolioclient.utils.PriceFormatter;
 
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.List;
 
 public class HoldingListAdapter extends BaseAdapter {
-    private Activity activity;
-    private List<Holding> holdings;
+    private Activity mActivity;
+    private List<Holding> mHoldings;
 
     public HoldingListAdapter(Activity activity, List<Holding> holdings) {
         super();
-        this.activity = activity;
-        this.holdings = holdings;
+        this.mActivity = activity;
+        this.mHoldings = holdings;
     }
 
     public List<Holding> getData() {
-        return holdings;
+        return mHoldings;
     }
 
     @Override
     public int getCount() {
-        return holdings.size();
+        return mHoldings.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return holdings.get(position);
+        return mHoldings.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return holdings.get(position).getId();
+        return mHoldings.get(position).getId();
     }
 
     @Override
@@ -52,7 +48,7 @@ public class HoldingListAdapter extends BaseAdapter {
         final ViewHolder viewHolder;
 
         if (convertView == null) {
-            LayoutInflater inflater = activity.getLayoutInflater();
+            LayoutInflater inflater = mActivity.getLayoutInflater();
             convertView = inflater.inflate(R.layout.list_item_holding, null);
 
             viewHolder = new ViewHolder(
@@ -70,16 +66,16 @@ public class HoldingListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        Holding summary = holdings.get(position);
+        Holding summary = mHoldings.get(position);
 
         viewHolder.getTextViewTicker().setText(summary.getTicker());
-        PriceFormater.setDecimalText(viewHolder.getTextViewAmount(), summary.getAmount());
-        PriceFormater.setDecimalText(viewHolder.getTextViewValue(), summary.getValue());
-        PriceFormater.setDecimalText(viewHolder.getTextViewCost(), summary.getCost());
-        PriceFormater.setChangeText(viewHolder.getTextViewDailyChange(), summary.getDailyChange());
-        PriceFormater.setChangePercentageText(viewHolder.getTextViewDailyChangePercentage(), summary.getDailyChangePercentage());
-        PriceFormater.setChangeText(viewHolder.getTextViewTotalChange(), summary.getTotalChange());
-        PriceFormater.setChangePercentageText(viewHolder.getTextViewTotalChangePercentage(), summary.getTotalChangePercentage());
+        PriceFormatter.setDecimalText(viewHolder.getTextViewAmount(), summary.getAmount());
+        PriceFormatter.setDecimalText(viewHolder.getTextViewValue(), summary.getValue());
+        PriceFormatter.setDecimalText(viewHolder.getTextViewCost(), summary.getCost());
+        PriceFormatter.setChangeText(viewHolder.getTextViewDailyChange(), summary.getDailyChange());
+        PriceFormatter.setChangePercentageText(viewHolder.getTextViewDailyChangePercentage(), summary.getDailyChangePercentage());
+        PriceFormatter.setChangeText(viewHolder.getTextViewTotalChange(), summary.getTotalChange());
+        PriceFormatter.setChangePercentageText(viewHolder.getTextViewTotalChangePercentage(), summary.getTotalChangePercentage());
 
         return convertView;
     }

@@ -22,7 +22,6 @@ import org.goldenroute.portfolioclient.signin.SignInManager;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.text.DateFormat;
 import java.util.Date;
 
 import okhttp3.Interceptor;

@@ -120,7 +120,7 @@ public class LoginActivity extends AppCompatActivity implements
     }
 
     private void onExploreAsGuestClicked() {
-
+        Toast.makeText(this, "Coming soon...", Toast.LENGTH_LONG).show();
     }
 
     private void initialize() {
@@ -135,7 +135,7 @@ public class LoginActivity extends AppCompatActivity implements
     private void gotoMain(SignInManager signInManage, boolean saveToken) {
         if (saveToken) {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-            sharedPreferences.edit().putString(SIGN_IN_PROVIDER, signInManage.getProvider()).commit();
+            sharedPreferences.edit().putString(SIGN_IN_PROVIDER, signInManage.getProvider()).apply();
             signInManage.saveToken();
         }
 

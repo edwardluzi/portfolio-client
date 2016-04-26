@@ -1,88 +1,82 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.MainPortfolioFragment">
 
-    <RelativeLayout
+
+    <LinearLayout
+        android:id="@+id/layout_column_header_portfolio"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/layout_column_header_portfolio"
-            android:layout_alignParentTop="true"
-            android:layout_width="match_parent"
+        <TextView
+
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:text="@string/label_name" />
 
-            <TextView
+        <TextView
 
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Name" />
-
-            <TextView
-
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Value"
-                android:textAlignment="textEnd" />
-
-            <TextView
-
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Daily"
-                android:textAlignment="textEnd" />
-
-            <TextView
-
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Total"
-                android:textAlignment="textEnd" />
-
-        </LinearLayout>
-
-        <View
-            android:id="@+id/layout_column_header_underline_portfolio"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@+id/layout_column_header_portfolio"
-            android:background="@android:color/darker_gray" />
-
-
-        <ListView
-            android:id="@+id/list_view_portfolios"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/view_portfolio_divider"
-            android:layout_below="@+id/layout_column_header_underline_portfolio"
-            android:choiceMode="multipleChoiceModal"
-            android:footerDividersEnabled="true"
-            android:headerDividersEnabled="false" />
+            android:layout_weight="1"
+            android:text="@string/label_value"
+            android:textAlignment="textEnd" />
 
-        <View
-            android:id="@+id/view_portfolio_divider"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_above="@+id/list_view_portfolio_total"
-            android:background="@android:color/darker_gray" />
+        <TextView
 
-        <ListView
-            android:id="@+id/list_view_portfolio_total"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:choiceMode="singleChoice"
-            android:footerDividersEnabled="false"
-            android:headerDividersEnabled="false" />
+            android:layout_weight="1"
+            android:text="@string/label_daily"
+            android:textAlignment="textEnd" />
 
-    </RelativeLayout>
+        <TextView
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/label_total"
+            android:textAlignment="textEnd" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/layout_column_header_underline_portfolio"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/layout_column_header_portfolio"
+        android:background="@android:color/darker_gray" />
 
 
-</FrameLayout>
+    <ListView
+        android:id="@+id/list_view_portfolios"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/view_portfolio_divider"
+        android:layout_below="@+id/layout_column_header_underline_portfolio"
+        android:choiceMode="multipleChoiceModal"
+        android:footerDividersEnabled="true"
+        android:headerDividersEnabled="false" />
+
+    <View
+        android:id="@+id/view_portfolio_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@+id/list_view_portfolio_total"
+        android:background="@android:color/darker_gray" />
+
+    <ListView
+        android:id="@+id/list_view_portfolio_total"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:choiceMode="singleChoice"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false" />
+
+</RelativeLayout>

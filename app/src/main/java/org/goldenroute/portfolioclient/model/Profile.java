@@ -1,5 +1,6 @@
 package org.goldenroute.portfolioclient.model;
 
+@SuppressWarnings("InstanceVariableNamingConvention")
 public class Profile {
     private Long id;
 
@@ -11,7 +12,7 @@ public class Profile {
 
     private String avatarUrl;
 
-    private String localtion;
+    private String location;
 
     public Long getId() {
         return id;
@@ -49,11 +50,11 @@ public class Profile {
         this.avatarUrl = avatarUrl;
     }
 
-    public String getLocaltion() {
-        return localtion;
+    public String getLocation() {
+        return location;
     }
 
-    public void setLocaltion(String localtion) {
-        this.localtion = localtion;
+    public void setLocation(String location) {
+        this.location = location;
     }
 }

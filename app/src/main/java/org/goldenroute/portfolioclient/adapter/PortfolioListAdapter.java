@@ -1,56 +1,49 @@
 package org.goldenroute.portfolioclient.adapter;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
-import android.support.v4.content.res.ResourcesCompat;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import org.goldenroute.portfolioclient.R;
 import org.goldenroute.portfolioclient.model.Portfolio;
-import org.goldenroute.portfolioclient.utils.PriceFormater;
+import org.goldenroute.portfolioclient.utils.PriceFormatter;
 
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.List;
 
 
 public class PortfolioListAdapter extends ToggleAdapter {
-    private Activity activity;
-    private List<Portfolio> portfolios;
+    private Activity mActivity;
+    private List<Portfolio> mPortfolios;
 
     public PortfolioListAdapter(Activity activity, List<Portfolio> portfolios) {
         super();
-        this.activity = activity;
-        this.portfolios = portfolios;
+        this.mActivity = activity;
+        this.mPortfolios = portfolios;
     }
 
     public List<Portfolio> getData() {
-        return portfolios;
+        return mPortfolios;
     }
 
     @Override
     public int getCount() {
-        return portfolios.size();
+        return mPortfolios.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return portfolios.get(position);
+        return mPortfolios.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return portfolios.get(position).getId();
+        return mPortfolios.get(position).getId();
     }
 
     @Override
@@ -59,7 +52,7 @@ public class PortfolioListAdapter extends ToggleAdapter {
         final ViewHolder viewHolder;
 
         if (convertView == null) {
-            LayoutInflater inflater = activity.getLayoutInflater();
+            LayoutInflater inflater = mActivity.getLayoutInflater();
             convertView = inflater.inflate(R.layout.list_item_portfolio, null);
 
             viewHolder = new ViewHolder(
@@ -78,7 +71,7 @@ public class PortfolioListAdapter extends ToggleAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        Portfolio summary = portfolios.get(position);
+        Portfolio summary = mPortfolios.get(position);
 
         if (getSelectedIds().contains(summary.getId())) {
             SpannableString spanString = new SpannableString("+" + summary.getName());
@@ -90,13 +83,13 @@ public class PortfolioListAdapter extends ToggleAdapter {
             viewHolder.getTextViewName().setText(summary.getName());
         }
 
-        PriceFormater.setDecimalText(viewHolder.getTextViewWeight(), summary.getWeight());
-        PriceFormater.setDecimalText(viewHolder.getTextViewValue(), summary.getValue());
-        PriceFormater.setDecimalText(viewHolder.getTextViewCost(), summary.getCost());
-        PriceFormater.setChangeText(viewHolder.getTextViewDailyChange(), summary.getDailyChange());
-        PriceFormater.setChangePercentageText(viewHolder.getTextViewDailyChangePercentage(), summary.getDailyChangePercentage());
-        PriceFormater.setChangeText(viewHolder.getTextViewTotalChange(), summary.getTotalChange());
-        PriceFormater.setChangePercentageText(viewHolder.getTextViewTotalChangePercentage(), summary.getTotalChangePercentage());
+        PriceFormatter.setDecimalText(viewHolder.getTextViewWeight(), summary.getWeight());
+        PriceFormatter.setDecimalText(viewHolder.getTextViewValue(), summary.getValue());
+        PriceFormatter.setDecimalText(viewHolder.getTextViewCost(), summary.getCost());
+        PriceFormatter.setChangeText(viewHolder.getTextViewDailyChange(), summary.getDailyChange());
+        PriceFormatter.setChangePercentageText(viewHolder.getTextViewDailyChangePercentage(), summary.getDailyChangePercentage());
+        PriceFormatter.setChangeText(viewHolder.getTextViewTotalChange(), summary.getTotalChange());
+        PriceFormatter.setChangePercentageText(viewHolder.getTextViewTotalChangePercentage(), summary.getTotalChangePercentage());
 
         return convertView;
     }

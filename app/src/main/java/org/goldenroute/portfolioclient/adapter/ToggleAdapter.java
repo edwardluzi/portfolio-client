@@ -1,13 +1,12 @@
 package org.goldenroute.portfolioclient.adapter;
 
-import android.util.SparseBooleanArray;
 import android.widget.BaseAdapter;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public abstract class ToggleAdapter extends BaseAdapter {
-    private Set<Long> mSelectedItemsIds = new HashSet<Long>();
+    private Set<Long> mSelectedItemsIds = new HashSet<>();
 
     public void toggleSelection(Long id) {
         if (this.mSelectedItemsIds.contains(id)) {
@@ -18,7 +17,7 @@ public abstract class ToggleAdapter extends BaseAdapter {
     }
 
     public void removeSelection() {
-        mSelectedItemsIds = new HashSet<Long>();
+        mSelectedItemsIds = new HashSet<>();
         notifyDataSetChanged();
     }
 

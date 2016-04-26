@@ -1,16 +1,13 @@
 package org.goldenroute.portfolioclient.model;
 
 
-import com.android.internal.util.Predicate;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
+@SuppressWarnings("InstanceVariableNamingConvention")
 public class Account {
     private Long id;
     private String username;
@@ -43,7 +40,7 @@ public class Account {
 
     public Portfolio find(final Long pid) {
         for (Portfolio portfolio : this.portfolios) {
-            if (portfolio.getId() == pid) {
+            if (portfolio.getId().equals(pid)) {
                 return portfolio;
             }
         }
@@ -53,7 +50,7 @@ public class Account {
     public void addOrUpdate(Portfolio portfolio) {
 
         if (this.portfolios == null) {
-            this.portfolios = new ArrayList<Portfolio>();
+            this.portfolios = new ArrayList<>();
         }
 
         int index = Collections.binarySearch(this.portfolios, portfolio, new Comparator<Portfolio>() {

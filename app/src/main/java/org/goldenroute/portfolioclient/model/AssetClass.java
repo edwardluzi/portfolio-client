@@ -1,6 +1,5 @@
 package org.goldenroute.portfolioclient.model;
 
-public enum AssetClass
-{
+public enum AssetClass {
     Equity, FixedIncome
 }

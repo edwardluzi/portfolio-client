@@ -77,6 +77,8 @@ public class MainPortfolioFragment extends MainBaseFragment implements ListView.
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
+        this.setTitle(getString(R.string.label_nav_portfolios));
+
         mListViewPortfolios.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
 
             @Override
@@ -232,19 +234,20 @@ public class MainPortfolioFragment extends MainBaseFragment implements ListView.
     }
 
     public class DeletePortfolioTask extends RestAsyncTask<Void, Void, Boolean> {
-        private Set<Long> pids;
-private Boolean result;
+        private Set<Long> mPortfolioIds;
+        private Boolean mResult;
+
         public DeletePortfolioTask(Activity activity, Set<Long> pids) {
             super(activity, true);
-            this.pids = pids;
-            this.result = false;
+            this.mPortfolioIds = pids;
+            this.mResult = false;
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
             try {
-                Call<Boolean> call = RestOperations.getInstance().getPortfolioService().delete(getClientContext().getAccount().getId(), TextUtils.join(",", this.pids));
-                this.result= call.execute().body();
+                Call<Boolean> call = RestOperations.getInstance().getPortfolioService().delete(getClientContext().getAccount().getId(), TextUtils.join(",", this.mPortfolioIds));
+                this.mResult = call.execute().body();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -256,8 +259,8 @@ private Boolean result;
             super.onPostExecute(success);
             mPortfolioListAdapter.removeSelection();
 
-            if (success && this.result) {
-                getClientContext().getAccount().remove(this.pids);
+            if (success && this.mResult) {
+                getClientContext().getAccount().remove(this.mPortfolioIds);
                 refresh();
             } else {
                 Toast.makeText(this.getParentActivity(), "Failed to retrieve account information from server.", Toast.LENGTH_LONG).show();

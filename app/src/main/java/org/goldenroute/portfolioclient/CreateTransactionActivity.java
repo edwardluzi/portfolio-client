@@ -51,25 +51,25 @@ public class CreateTransactionActivity extends AppCompatActivity implements View
     protected Toolbar mToolbar;
 
     @Bind(R.id.edit_text_transaction_date)
-    protected EditText nEditTextDate;
+    protected EditText mEditTextDate;
 
     @Bind(R.id.edit_text_transaction_ticker)
-    protected EditText nEditTextTicker;
+    protected EditText mEditTextTicker;
 
     @Bind(R.id.spinner_transaction_type)
     protected Spinner mSpinnerType;
 
     @Bind(R.id.edit_text_transaction_price)
-    protected EditText nEditTextPrice;
+    protected EditText mEditTextPrice;
 
     @Bind(R.id.edit_text_transaction_amount)
-    protected EditText nEditTextAmount;
+    protected EditText mEditTextAmount;
 
     @Bind(R.id.edit_text_transaction_commission)
-    protected EditText nEditTextCommission;
+    protected EditText mEditTextCommission;
 
     @Bind(R.id.edit_text_transaction_other_charges)
-    protected EditText nEditTextOtherCharges;
+    protected EditText mEditTextOtherCharges;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,14 +88,14 @@ public class CreateTransactionActivity extends AppCompatActivity implements View
         if (mTransactionId != 0) {
             Transaction transaction = getClientContext().getAccount().find(mPortfolioId).find(mTransactionId);
 
-            nEditTextDate.setText(mDateFormatter.format(transaction.getDate()));
-            nEditTextTicker.setText(transaction.getTicker());
+            mEditTextDate.setText(mDateFormatter.format(transaction.getDate()));
+            mEditTextTicker.setText(transaction.getTicker());
             mSpinnerType.setSelection(transaction.getType().ordinal());
 
-            setupDecimalText(nEditTextPrice, transaction.getPrice());
-            setupDecimalText(nEditTextAmount, transaction.getAmount());
-            setupDecimalText(nEditTextCommission, transaction.getCommission());
-            setupDecimalText(nEditTextOtherCharges, transaction.getOtherCharges());
+            setupDecimalText(mEditTextPrice, transaction.getPrice());
+            setupDecimalText(mEditTextAmount, transaction.getAmount());
+            setupDecimalText(mEditTextCommission, transaction.getCommission());
+            setupDecimalText(mEditTextOtherCharges, transaction.getOtherCharges());
         }
     }
 
@@ -122,33 +122,33 @@ public class CreateTransactionActivity extends AppCompatActivity implements View
 
     @Override
     public void onClick(View view) {
-        if (view == nEditTextDate) {
+        if (view == mEditTextDate) {
             mDatePickerDialog.show();
         }
     }
 
     private void setupDateText() {
-        nEditTextDate.setInputType(InputType.TYPE_NULL);
-        nEditTextDate.requestFocus();
+        mEditTextDate.setInputType(InputType.TYPE_NULL);
+        mEditTextDate.requestFocus();
         mDateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
-        nEditTextDate.setOnClickListener(this);
+        mEditTextDate.setOnClickListener(this);
 
         Calendar newCalendar = Calendar.getInstance();
-        nEditTextDate.setText(mDateFormatter.format(newCalendar.getTime()));
+        mEditTextDate.setText(mDateFormatter.format(newCalendar.getTime()));
 
         mDatePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
 
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
-                nEditTextDate.setText(mDateFormatter.format(newDate.getTime()));
+                mEditTextDate.setText(mDateFormatter.format(newDate.getTime()));
             }
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
     }
 
     private void setupDecimalText(EditText editText, BigDecimal value) {
         if (value != null) {
-            editText.setText(value.toString());
+            editText.setText(String.format(Locale.getDefault(), "%.2f", value));
         }
     }
 
@@ -170,38 +170,38 @@ public class CreateTransactionActivity extends AppCompatActivity implements View
         Date date;
 
         try {
-            date = mDateFormatter.parse(nEditTextDate.getText().toString());
+            date = mDateFormatter.parse(mEditTextDate.getText().toString());
         } catch (ParseException e) {
-            nEditTextDate.setError(e.getMessage());
+            mEditTextDate.setError(e.getMessage());
             return;
         }
 
-        String ticker = nEditTextTicker.getText().toString().trim();
+        String ticker = mEditTextTicker.getText().toString().trim();
         if (ticker.length() == 0) {
-            nEditTextTicker.setError("Must provide a ticker.");
+            mEditTextTicker.setError("Must provide a ticker.");
             return;
         }
 
         Transaction.Type type = Transaction.Type.values()[mSpinnerType.getSelectedItemPosition()];
 
-        BigDecimal price = loadDecimalValue(nEditTextPrice, true);
+        BigDecimal price = loadDecimalValue(mEditTextPrice, true);
         if (price == null) {
             return;
         } else if (price.compareTo(BigDecimal.ZERO) <= 0) {
-            nEditTextPrice.setError("Price must be larger than 0.00.");
+            mEditTextPrice.setError("Price must be larger than 0.00.");
             return;
         }
 
-        BigDecimal amount = loadDecimalValue(nEditTextAmount, true);
+        BigDecimal amount = loadDecimalValue(mEditTextAmount, true);
         if (amount == null) {
             return;
         } else if (amount.compareTo(BigDecimal.ZERO) <= 0) {
-            nEditTextAmount.setError("Amount must be larger than 0.00.");
+            mEditTextAmount.setError("Amount must be larger than 0.00.");
             return;
         }
 
-        BigDecimal commission = loadDecimalValue(nEditTextCommission, false);
-        BigDecimal otherCharges = loadDecimalValue(nEditTextOtherCharges, false);
+        BigDecimal commission = loadDecimalValue(mEditTextCommission, false);
+        BigDecimal otherCharges = loadDecimalValue(mEditTextOtherCharges, false);
 
         Transaction transaction;
 

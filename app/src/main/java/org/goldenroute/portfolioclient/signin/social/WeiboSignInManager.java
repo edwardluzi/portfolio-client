@@ -72,9 +72,9 @@ public class WeiboSignInManager extends SignInManager {
     }
 
     interface Constants {
-        public static final String APP_KEY = "2081019661";
-        public static final String REDIRECT_URL = "http://grpm.applinzi.com/oauth2/weibo";
-        public static final String SCOPE = "email";
+        String APP_KEY = "2081019661";
+        String REDIRECT_URL = "http://grpm.applinzi.com/oauth2/weibo";
+        String SCOPE = "email";
     }
 
     class WeiboAuthListenerImpl implements WeiboAuthListener {

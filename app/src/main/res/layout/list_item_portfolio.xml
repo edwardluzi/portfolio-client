@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:baselineAligned="false">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -13,15 +14,13 @@
             android:id="@+id/list_text_view_portfolio_name"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="AGGR" />
+            android:layout_weight="1" />
 
         <TextView
             android:id="@+id/list_text_view_portfolio_weight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="0"
             android:textAppearance="@style/textAppearanceSuperSmall" />
 
     </LinearLayout>
@@ -37,15 +36,13 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="9999999.99"
             android:textAlignment="textEnd" />
 
         <TextView
             android:id="@+id/list_text_view_portfolio_cost"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="8888888.88"
             android:textAlignment="textEnd"
             android:textAppearance="@style/textAppearanceSuperSmall" />
 
@@ -62,15 +59,13 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="+99999.99"
             android:textAlignment="textEnd" />
 
         <TextView
             android:id="@+id/list_text_view_portfolio_daily_change_percentage"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="+100.00%"
             android:textAlignment="textEnd"
             android:textAppearance="@style/textAppearanceSuperSmall" />
 
@@ -87,15 +82,13 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="+9999.99"
             android:textAlignment="textEnd" />
 
         <TextView
             android:id="@+id/list_text_view_portfolio_total_change_percentage"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="+112.00%"
             android:textAlignment="textEnd"
             android:textAppearance="@style/textAppearanceSuperSmall" />
 

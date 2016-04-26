@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,104 +13,101 @@
     tools:context=".CreateTransactionActivity"
     tools:showIn="@layout/activity_create_transaction">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:text="@string/label_date"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Date:"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+        <EditText
+            android:id="@+id/edit_text_transaction_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="date" />
 
-            <EditText
-                android:id="@+id/edit_text_transaction_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="date" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_ticker"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Ticker:"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+        <EditText
+            android:id="@+id/edit_text_transaction_ticker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
 
-            <EditText
-                android:id="@+id/edit_text_transaction_ticker"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_transaction_type"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Transaction Type:"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+        <Spinner
+            android:id="@+id/spinner_transaction_type"
+            style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-            <Spinner
-                android:id="@+id/spinner_transaction_type"
-                style="@style/Base.Widget.AppCompat.Spinner.Underlined"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_price"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Price:"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+        <EditText
+            android:id="@+id/edit_text_transaction_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="numberDecimal" />
 
-            <EditText
-                android:id="@+id/edit_text_transaction_price"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="numberDecimal" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_amount"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Amount:"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+        <EditText
+            android:id="@+id/edit_text_transaction_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="numberDecimal" />
 
-            <EditText
-                android:id="@+id/edit_text_transaction_amount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="numberDecimal" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_commission"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Commission:"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+        <EditText
+            android:id="@+id/edit_text_transaction_commission"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="numberDecimal" />
 
-            <EditText
-                android:id="@+id/edit_text_transaction_commission"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="numberDecimal" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_other_charges"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Other Charges:"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-            <EditText
-                android:id="@+id/edit_text_transaction_other_charges"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="numberDecimal" />
-        </LinearLayout>
-    </ScrollView>
+        <EditText
+            android:id="@+id/edit_text_transaction_other_charges"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="numberDecimal" />
+    </LinearLayout>
 
 
-</LinearLayout>
+</ScrollView>
