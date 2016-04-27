@@ -33,11 +33,13 @@ import org.goldenroute.portfolioclient.rest.RestOperations;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import retrofit2.Call;
+import retrofit2.Response;
 
 
 public class PortfolioTransactionFragment extends RefreshableFragment implements ListView.OnItemClickListener {
@@ -107,16 +109,16 @@ public class PortfolioTransactionFragment extends RefreshableFragment implements
                 switch (item.getItemId()) {
                     case R.id.action_delete: {
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setMessage("Are you sure to delete these transactions？");
-                        builder.setTitle("Delete Portfolios");
-                        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                        builder.setMessage(getString(R.string.message_confirm_for_deleting));
+                        builder.setTitle(getString(R.string.title_delete_transaction));
+                        builder.setPositiveButton(getString(R.string.label_delete), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
-                                new DeleteTransactionTask(getActivity(), mTransactionListAdapter.getSelectedIds()).execute((Void) null);
+                                new DeletingTransactionTask(getActivity(), mTransactionListAdapter.getSelectedIds()).execute((Void) null);
                             }
                         });
-                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        builder.setNegativeButton(getString(R.string.label_cancel), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
@@ -210,11 +212,11 @@ public class PortfolioTransactionFragment extends RefreshableFragment implements
         }
     }
 
-    public class DeleteTransactionTask extends RestAsyncTask<Void, Void, Boolean> {
+    public class DeletingTransactionTask extends RestAsyncTask<Void, Void, Boolean> {
         private Set<Long> mTransactionIds;
         private Portfolio mReturned;
 
-        public DeleteTransactionTask(Activity activity, Set<Long> tids) {
+        public DeletingTransactionTask(Activity activity, Set<Long> tids) {
             super(activity, true);
             this.mTransactionIds = tids;
         }
@@ -223,11 +225,13 @@ public class PortfolioTransactionFragment extends RefreshableFragment implements
         protected Boolean doInBackground(Void... params) {
             try {
                 Call<Portfolio> call = RestOperations.getInstance().getTransactionService().delete(mPortfolioId, TextUtils.join(",", this.mTransactionIds));
-                mReturned = call.execute().body();
-                if (mReturned != null) {
+                Response<Portfolio> response = call.execute();
+                mReturned = response.body();
+                if (response.isSuccessful() && mReturned != null) {
                     getClientContext().getAccount().addOrUpdate(mReturned);
+                } else {
+                    parseError(response);
                 }
-
             } catch (IOException e) {
                 Log.e(TAG, e.getMessage());
             }
@@ -243,7 +247,11 @@ public class PortfolioTransactionFragment extends RefreshableFragment implements
             if (success && mReturned != null) {
                 refresh();
             } else {
-                Toast.makeText(this.getParentActivity(), "Failed to operate transaction.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this.getParentActivity(),
+                        String.format(Locale.getDefault(),
+                                getString(R.string.message_deleting_transaction_failed),
+                                getError()),
+                        Toast.LENGTH_LONG).show();
             }
         }
     }

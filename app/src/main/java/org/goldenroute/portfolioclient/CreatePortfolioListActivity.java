@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -19,12 +20,15 @@ import org.goldenroute.portfolioclient.rest.RestAsyncTask;
 import org.goldenroute.portfolioclient.rest.RestOperations;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import retrofit2.Call;
+import retrofit2.Response;
 
 public class CreatePortfolioListActivity extends AppCompatActivity {
+    private static final String TAG = CreatePortfolioListActivity.class.getName();
 
     public static final String ARG_PID = "pid";
     public static final String ARG_TYPE = "type";
@@ -51,7 +55,7 @@ public class CreatePortfolioListActivity extends AppCompatActivity {
     protected EditText m_EditTextDescription;
 
     private Long mPortfolioId;
-    private CreatePortfolioTask mCreatePortfolioTask;
+    private CreatingPortfolioTask mCreatePortfolioTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +123,7 @@ public class CreatePortfolioListActivity extends AppCompatActivity {
         }
 
         if (m_EditTextName.getText().toString().length() == 0) {
-            m_EditTextName.setError("Please provide a valid name.");
+            m_EditTextName.setError(getString(R.string.message_provide_a_valid_portfolio_name));
             return;
         }
 
@@ -131,7 +135,7 @@ public class CreatePortfolioListActivity extends AppCompatActivity {
         portfolio.setCurrency(Currency.values()[mSpinnerCurrency.getSelectedItemPosition()]);
         portfolio.setDescription(m_EditTextDescription.getText().toString());
 
-        mCreatePortfolioTask = new CreatePortfolioTask(this, portfolio);
+        mCreatePortfolioTask = new CreatingPortfolioTask(this, portfolio);
         mCreatePortfolioTask.execute((Void) null);
     }
 
@@ -139,12 +143,12 @@ public class CreatePortfolioListActivity extends AppCompatActivity {
         return (ClientContext) this.getApplication();
     }
 
-    public class CreatePortfolioTask extends RestAsyncTask<Void, Void, Boolean> {
+    public class CreatingPortfolioTask extends RestAsyncTask<Void, Void, Boolean> {
 
         private Portfolio mPortfolio;
         private Portfolio mReturned;
 
-        public CreatePortfolioTask(Activity activity, Portfolio portfolio) {
+        public CreatingPortfolioTask(Activity activity, Portfolio portfolio) {
             super(activity, true);
             mPortfolio = portfolio;
         }
@@ -152,47 +156,50 @@ public class CreatePortfolioListActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Void... params) {
 
-            Long accountId = getClientContext().getAccount().getId();
-
             try {
+                Call<Portfolio> call;
+                Response<Portfolio> response;
+
                 if (mPortfolioId == 0) {
-                    Call<Portfolio> call = RestOperations.getInstance().getPortfolioService().create(accountId, mPortfolio);
-                    mReturned = call.execute().body();
+                    call = RestOperations.getInstance().getPortfolioService().create(mPortfolio);
 
-                    if (mReturned != null) {
-                        getClientContext().getAccount().addOrUpdate(mReturned);
-                    }
                 } else {
-                    Call<Portfolio> call = RestOperations.getInstance().getPortfolioService().update(accountId, mPortfolio.getId(), mPortfolio);
-                    mReturned = call.execute().body();
+                    call = RestOperations.getInstance().getPortfolioService().update(mPortfolio.getId(), mPortfolio);
 
-                    if (mReturned != null) {
-                        getClientContext().getAccount().addOrUpdate(mReturned);
-                    }
                 }
-
+                response = call.execute();
+                mReturned = response.body();
+                if (response.isSuccessful() && mReturned != null) {
+                    getClientContext().getAccount().addOrUpdate(mReturned);
+                } else {
+                    parseError(response);
+                }
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e(TAG, e.getMessage());
             }
             return true;
         }
 
         @Override
         protected void onPostExecute(final Boolean success) {
-
             super.onPostExecute(success);
 
             mCreatePortfolioTask = null;
 
             if (success && mReturned != null) {
-                Toast.makeText(this.getParentActivity(), "Succeed in operating portfolio", Toast.LENGTH_LONG).show();
+                Toast.makeText(this.getParentActivity(),
+                        getString(mPortfolioId == 0 ? R.string.message_adding_portfolio_succeeded : R.string.message_modifying_portfolio_succeeded), Toast.LENGTH_LONG).show();
                 Intent intent = new Intent();
                 intent.putExtra(ARG_PID, mReturned.getId());
                 setResult(RESULT_OK, intent);
                 finish();
 
             } else {
-                Toast.makeText(this.getParentActivity(), "Failed to operate portfolio", Toast.LENGTH_LONG).show();
+                Toast.makeText(this.getParentActivity(),
+                        String.format(Locale.getDefault(),
+                                getString(mPortfolioId == 0 ? R.string.message_adding_portfolio_failed : R.string.message_modifying_portfolio_failed),
+                                getError()),
+                        Toast.LENGTH_LONG).show();
             }
         }
     }

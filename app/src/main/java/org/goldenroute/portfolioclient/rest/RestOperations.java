@@ -45,10 +45,8 @@ public class RestOperations {
     public static void initialize(Activity activity) {
         mInstance = new RestOperations();
         mInstance.create(activity);
-
     }
 
-    private Context mContext;
     private Retrofit mRetrofit;
     private AccountService mAccountService;
     private PortfolioService mPortfolioService;

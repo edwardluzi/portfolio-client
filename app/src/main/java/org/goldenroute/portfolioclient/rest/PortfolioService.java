@@ -11,12 +11,12 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface PortfolioService {
-    @POST("accounts/{uid}/portfolios")
-    Call<Portfolio> create(@Path("uid") Long uid, @Body Portfolio portfolio);
+    @POST("portfolios")
+    Call<Portfolio> create(@Body Portfolio portfolio);
 
-    @PUT("accounts/{uid}/portfolios/{pid}")
-    Call<Portfolio> update(@Path("uid") Long uid, @Path("pid") Long pid, @Body Portfolio portfolio);
+    @PUT("portfolios/{pid}")
+    Call<Portfolio> update(@Path("pid") Long pid, @Body Portfolio portfolio);
 
-    @DELETE("accounts/{uid}/portfolios/{pids}")
-    Call<Boolean> delete(@Path("uid") Long uid, @Path("pids") String pids);
+    @DELETE("portfolios/{pids}")
+    Call<Boolean> delete(@Path("pids") String pids);
 }

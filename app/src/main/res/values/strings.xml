@@ -13,6 +13,7 @@
     <string name="content_description_wechat_sign_in">Wechat sign in</string>
     <string name="content_description_weibo_sign_in">Weibo sign in</string>
     <string name="content_description_navigation">boating</string>
+    <string name="content_description_avatar">Avatar</string>
     <string name="title_activity_about">AboutActivity</string>
     <string name="title_activity_create_portfolio">Create Portfolio</string>
     <string name="title_activity_edit_portfolio">Edit Portfolio</string>
@@ -21,8 +22,10 @@
     <string name="title_activity_portfolio">Portfolio</string>
     <string name="title_activity_settings">Settings</string>
     <string name="title_activity_add_transaction">Add Transaction</string>
-    <string name="page_title_portfolio_holdings">Holdings</string>
-    <string name="page_title_portfolio_transactions">Transactions</string>
+    <string name="title_portfolio_holdings">Holdings</string>
+    <string name="title_portfolio_transactions">Transactions</string>
+    <string name="title_delete_portfolio">Delete Portfolio</string>
+    <string name="title_delete_transaction">Delete Transaction</string>
     <string name="label_portfolio_list_type">Type:</string>
     <string name="label_portfolio_list_name">Name:</string>
     <string name="label_portfolio_list_asset_class">Primary asset class:</string>
@@ -35,6 +38,10 @@
     <string name="label_profile_user_id">User ID:</string>
     <string name="label_profile_screen_name">Screen name:</string>
     <string name="label_profile_location">Location:</string>
+    <string name="label_coming_soon">Coming soon...</string>
+    <string name="label_delete">Delete</string>
+    <string name="label_cancel">Cancel</string>
+    <string name="label_items_selected">%1$s selected</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="navigation_drawer_image">Portfolios Management</string>
@@ -89,5 +96,31 @@
     <string name="label_nav_lists">Lists</string>
     <string name="label_nav_market">Market</string>
     <string name="label_nav_alerts">Alerts</string>
-    <string name="content_description_avatar">Avatar</string>
+
+    <string name="message_provide_a_valid_portfolio_name">Please provide a valid portfolio name.</string>
+    <string name="message_provide_a_valid_ticker">Please provide a valid ticker.</string>
+    <string name="message_price_must_be_positive">Price must be positive.</string>
+    <string name="message_amount_must_be_positive">Amount must be positive.</string>
+    <string name="message_confirm_for_deleting">Are you sure to delete them?</string>
+
+    <string name="message_retrieving_account_failed">Retrieving account failed: %1$s.</string>
+    <string name="message_adding_portfolio_succeeded">Adding portfolio succeeded.</string>
+    <string name="message_modifying_portfolio_succeeded">Modifying portfolio succeeded.</string>
+    <string name="message_deleting_portfolio_succeeded">Deleting portfolio succeeded.</string>
+    <string name="message_adding_portfolio_failed">Adding portfolio failed: %1$s</string>
+    <string name="message_modifying_portfolio_failed">Modifying portfolio failed: %1$s</string>
+    <string name="message_deleting_portfolio_failed">Deleting portfolio failed: %1$s</string>
+
+    <string name="message_adding_transaction_succeeded">Adding transaction succeeded.</string>
+    <string name="message_modifying_transaction_succeeded">Modifying transaction succeeded.</string>
+    <string name="message_deleting_transaction_succeeded">Deleting transaction succeeded.</string>
+    <string name="message_adding_transaction_failed">Adding transaction failed: %1$s</string>
+    <string name="message_modifying_transaction_failed">Modifying transaction failed: %1$s.</string>
+    <string name="message_deleting_transaction_failed">Deleting transaction failed: %1$s.</string>
+
+    <string name="message_authorization_canceled">%1$s authorization canceled.</string>
+    <string name="message_authorization_succeeded">%1$s authorization succeeded.</string>
+    <string name="message_authorization_error">%1$s authorization error: %2$s.</string>
+
+    <string name="message_unknown_error">Unknown error.</string>
 </resources>

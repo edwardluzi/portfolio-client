@@ -10,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -23,13 +24,17 @@ import org.goldenroute.portfolioclient.rest.RestAsyncTask;
 import org.goldenroute.portfolioclient.rest.RestOperations;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import retrofit2.Call;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static final String TAG = MainActivity.class.getName();
 
     @Bind(R.id.toolbar_portfolio)
     protected Toolbar mToolbar;
@@ -61,7 +66,8 @@ public class MainActivity extends AppCompatActivity
             onNavigationItemSelected(mNavigationView.getMenu().getItem(0));
         }
 
-        new ReadAccountTask(this).execute((Void) null);
+        RestOperations.initialize(this);
+        new ReadingAccountTask(this).execute((Void) null);
     }
 
     @Override
@@ -103,7 +109,7 @@ public class MainActivity extends AppCompatActivity
         try {
             fragment = (MainBaseFragment) fragmentClass.newInstance();
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
         }
 
         if (fragment != null) {
@@ -135,10 +141,10 @@ public class MainActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public class ReadAccountTask extends RestAsyncTask<Void, Void, Boolean> {
-        public Account mAccount;
+    public class ReadingAccountTask extends RestAsyncTask<Void, Void, Boolean> {
+        private Account mAccount;
 
-        public ReadAccountTask(Activity activity) {
+        public ReadingAccountTask(Activity activity) {
             super(activity, true);
         }
 
@@ -146,9 +152,13 @@ public class MainActivity extends AppCompatActivity
         protected Boolean doInBackground(Void... params) {
             try {
                 Call<Account> call = RestOperations.getInstance().getAccountService().getAccount(0L);
-                mAccount = call.execute().body();
+                Response<Account> response = call.execute();
+                mAccount = response.body();
+                if (!response.isSuccessful() || mAccount == null) {
+                    parseError(response);
+                }
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e(TAG, e.getMessage());
                 mAccount = null;
             }
             return true;
@@ -160,7 +170,9 @@ public class MainActivity extends AppCompatActivity
             if (success && mAccount != null) {
                 refresh(mAccount);
             } else {
-                Toast.makeText(this.getParentActivity(), "Failed to retrieve account information from server.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this.getParentActivity(),
+                        String.format(Locale.getDefault(), getString(R.string.message_retrieving_account_failed), getError()),
+                        Toast.LENGTH_LONG).show();
             }
         }
     }

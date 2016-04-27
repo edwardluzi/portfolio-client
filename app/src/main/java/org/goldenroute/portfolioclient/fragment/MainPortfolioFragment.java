@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -35,13 +36,16 @@ import org.goldenroute.portfolioclient.rest.RestOperations;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import retrofit2.Call;
+import retrofit2.Response;
 
 public class MainPortfolioFragment extends MainBaseFragment implements ListView.OnItemClickListener {
+    private static final String TAG = MainPortfolioFragment.class.getName();
 
     private static final int RC_ADD = 1;
     private static final int RC_EDIT = 2;
@@ -87,7 +91,7 @@ public class MainPortfolioFragment extends MainBaseFragment implements ListView.
                 // Capture total checked items
                 final int checkedCount = mListViewPortfolios.getCheckedItemCount();
                 // Set the CAB title according to total checked items
-                mode.setTitle(checkedCount + " Selected");
+                mode.setTitle(String.format(Locale.getDefault(), getString(R.string.label_items_selected), checkedCount));
                 // Calls toggleSelection method from ListViewAdapter Class
                 mPortfolioListAdapter.toggleSelection(id);
             }
@@ -97,16 +101,16 @@ public class MainPortfolioFragment extends MainBaseFragment implements ListView.
                 switch (item.getItemId()) {
                     case R.id.action_delete: {
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setMessage("Are you sure to delete these portfolios？");
-                        builder.setTitle("Delete Portfolios");
-                        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                        builder.setMessage(getString(R.string.message_confirm_for_deleting));
+                        builder.setTitle(getString(R.string.title_delete_portfolio));
+                        builder.setPositiveButton(getString(R.string.label_delete), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
-                                new DeletePortfolioTask(getActivity(), mPortfolioListAdapter.getSelectedIds()).execute((Void) null);
+                                new DeletingPortfolioTask(getActivity(), mPortfolioListAdapter.getSelectedIds()).execute((Void) null);
                             }
                         });
-                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        builder.setNegativeButton(getString(R.string.label_cancel), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
@@ -233,11 +237,11 @@ public class MainPortfolioFragment extends MainBaseFragment implements ListView.
         }
     }
 
-    public class DeletePortfolioTask extends RestAsyncTask<Void, Void, Boolean> {
+    public class DeletingPortfolioTask extends RestAsyncTask<Void, Void, Boolean> {
         private Set<Long> mPortfolioIds;
         private Boolean mResult;
 
-        public DeletePortfolioTask(Activity activity, Set<Long> pids) {
+        public DeletingPortfolioTask(Activity activity, Set<Long> pids) {
             super(activity, true);
             this.mPortfolioIds = pids;
             this.mResult = false;
@@ -246,10 +250,15 @@ public class MainPortfolioFragment extends MainBaseFragment implements ListView.
         @Override
         protected Boolean doInBackground(Void... params) {
             try {
-                Call<Boolean> call = RestOperations.getInstance().getPortfolioService().delete(getClientContext().getAccount().getId(), TextUtils.join(",", this.mPortfolioIds));
-                this.mResult = call.execute().body();
+                Call<Boolean> call = RestOperations.getInstance().getPortfolioService().delete(TextUtils.join(",", this.mPortfolioIds));
+                Response<Boolean> response = call.execute();
+                mResult = response.body();
+                if (!response.isSuccessful() || mResult == null || !mResult) {
+                    parseError(response);
+                    mResult = false;
+                }
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e(TAG, e.getMessage());
             }
             return true;
         }
@@ -260,10 +269,13 @@ public class MainPortfolioFragment extends MainBaseFragment implements ListView.
             mPortfolioListAdapter.removeSelection();
 
             if (success && this.mResult) {
+                Toast.makeText(this.getParentActivity(), getString(R.string.message_deleting_portfolio_succeeded), Toast.LENGTH_LONG).show();
                 getClientContext().getAccount().remove(this.mPortfolioIds);
                 refresh();
             } else {
-                Toast.makeText(this.getParentActivity(), "Failed to retrieve account information from server.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this.getParentActivity(),
+                        String.format(Locale.getDefault(), getString(R.string.message_deleting_portfolio_failed), getError()),
+                        Toast.LENGTH_LONG).show();
             }
         }
     }

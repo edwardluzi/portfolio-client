@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
 
 public class PortfolioActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
 
-    public static final String POSITION = "POSITION";
+    public static final String POSITION = "pos";
     public static final String ARG_PID = "pid";
     private static final int RC_ADD = 1;
     private static final int RC_EDIT = 2;
@@ -171,8 +171,8 @@ public class PortfolioActivity extends AppCompatActivity implements ViewPager.On
         }
 
         private final int[] mPageTitleResourceIds = {
-                R.string.page_title_portfolio_holdings,
-                R.string.page_title_portfolio_transactions
+                R.string.title_portfolio_holdings,
+                R.string.title_portfolio_transactions
         };
 
         @Override

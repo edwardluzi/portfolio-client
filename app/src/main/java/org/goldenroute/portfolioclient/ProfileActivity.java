@@ -1,11 +1,8 @@
 package org.goldenroute.portfolioclient;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
-
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -72,36 +69,4 @@ public class ProfileActivity extends AppCompatActivity {
                     .into(mImageViewAvatar);
         }
     }
-
-
-    private class HttpRequestTask extends AsyncTask<Void, Void, Account> {
-        @Override
-        protected Account doInBackground(Void... params) {
-            try {
-   /*             final String url = "http://10.35.12.99:8080/api/account/1";
-                RestTemplate restTemplate = new RestTemplate();
-                restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-
-                Account account = restTemplate.getForObject(url, Account.class);
-*/
-                return null;
-            } catch (Exception e) {
-                Log.e(TAG, e.getMessage(), e);
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Account greeting) {
-
-            //     ProfileActivity.this.setTitle(greeting.getSocialId());
-            //       TextView greetingIdText = (TextView) findViewById(R.id.id_value);
-            //     TextView greetingContentText = (TextView) findViewById(R.id.content_value);
-            //    greetingIdText.setText(greeting.getId());
-            //    greetingContentText.setText(greeting.getContent());
-        }
-
-    }
-
 }

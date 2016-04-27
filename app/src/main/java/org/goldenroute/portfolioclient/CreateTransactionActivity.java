@@ -33,6 +33,7 @@ import java.util.Locale;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import retrofit2.Call;
+import retrofit2.Response;
 
 public class CreateTransactionActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -178,7 +179,7 @@ public class CreateTransactionActivity extends AppCompatActivity implements View
 
         String ticker = mEditTextTicker.getText().toString().trim();
         if (ticker.length() == 0) {
-            mEditTextTicker.setError("Must provide a ticker.");
+            mEditTextTicker.setError(getString(R.string.message_provide_a_valid_ticker));
             return;
         }
 
@@ -188,7 +189,7 @@ public class CreateTransactionActivity extends AppCompatActivity implements View
         if (price == null) {
             return;
         } else if (price.compareTo(BigDecimal.ZERO) <= 0) {
-            mEditTextPrice.setError("Price must be larger than 0.00.");
+            mEditTextPrice.setError(getString(R.string.message_price_must_be_positive));
             return;
         }
 
@@ -196,7 +197,7 @@ public class CreateTransactionActivity extends AppCompatActivity implements View
         if (amount == null) {
             return;
         } else if (amount.compareTo(BigDecimal.ZERO) <= 0) {
-            mEditTextAmount.setError("Amount must be larger than 0.00.");
+            mEditTextAmount.setError(getString(R.string.message_amount_must_be_positive));
             return;
         }
 
@@ -257,17 +258,20 @@ public class CreateTransactionActivity extends AppCompatActivity implements View
         protected Boolean doInBackground(Void... params) {
 
             try {
-
+                Call<Portfolio> call;
+                Response<Portfolio> response;
                 if (mTransactionId == 0) {
-                    Call<Portfolio> call = RestOperations.getInstance().getTransactionService().create(mPortfolioId, mTransaction);
-                    mReturned = call.execute().body();
+                    call = RestOperations.getInstance().getTransactionService().create(mPortfolioId, mTransaction);
                 } else {
-                    Call<Portfolio> call = RestOperations.getInstance().getTransactionService().update(mPortfolioId, mTransaction.getId(), mTransaction);
-                    mReturned = call.execute().body();
+                    call = RestOperations.getInstance().getTransactionService().update(mPortfolioId, mTransaction.getId(), mTransaction);
                 }
+                response = call.execute();
+                mReturned = response.body();
 
-                if (mReturned != null) {
+                if (response.isSuccessful() && mReturned != null) {
                     getClientContext().getAccount().addOrUpdate(mReturned);
+                } else {
+                    parseError(response);
                 }
 
             } catch (IOException e) {
@@ -279,18 +283,23 @@ public class CreateTransactionActivity extends AppCompatActivity implements View
         @Override
         protected void onPostExecute(final Boolean success) {
             super.onPostExecute(success);
-
             mAsyncTask = null;
-
             if (success && mReturned != null) {
-                Toast.makeText(this.getParentActivity(), "Succeed in operating transaction", Toast.LENGTH_LONG).show();
+                Toast.makeText(this.getParentActivity(),
+                        getString(mTransactionId == 0 ?
+                                R.string.message_adding_transaction_succeeded : R.string.message_modifying_transaction_succeeded),
+                        Toast.LENGTH_LONG).show();
                 Intent intent = new Intent();
                 intent.putExtra(ARG_TID, mTransactionId);
                 setResult(RESULT_OK, intent);
                 finish();
 
             } else {
-                Toast.makeText(this.getParentActivity(), "Failed to operate transaction", Toast.LENGTH_LONG).show();
+                Toast.makeText(this.getParentActivity(),
+                        String.format(Locale.getDefault(),
+                                getString(mTransactionId == 0 ? R.string.message_adding_transaction_failed : R.string.message_modifying_transaction_failed),
+                                getError()),
+                        Toast.LENGTH_LONG).show();
             }
         }
     }

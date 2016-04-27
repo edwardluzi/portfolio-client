@@ -34,3 +34,4 @@ captures/
 
 /local.properties
 /.idea
+/gradle.properties

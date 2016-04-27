@@ -22,6 +22,7 @@ import org.goldenroute.portfolioclient.signin.social.FacebookSignInManager;
 import org.goldenroute.portfolioclient.signin.social.WeiboSignInManager;
 
 import java.util.Hashtable;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -89,7 +90,7 @@ public class LoginActivity extends AppCompatActivity implements
     @Override
     public void onComplete(String provider) {
         Toast.makeText(this,
-                provider + " authorization succeeded.", Toast.LENGTH_SHORT).show();
+                String.format(Locale.getDefault(), getString(R.string.message_authorization_succeeded), provider), Toast.LENGTH_SHORT).show();
 
         gotoMain(mSignInManagers.get(provider), true);
     }
@@ -97,13 +98,13 @@ public class LoginActivity extends AppCompatActivity implements
     @Override
     public void onCancel(String provider) {
         Toast.makeText(this,
-                provider + " authorization canceled.", Toast.LENGTH_LONG).show();
+                String.format(Locale.getDefault(), getString(R.string.message_authorization_canceled), provider), Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onError(String provider, String message) {
         Toast.makeText(this,
-                provider + " authorization error : " + message, Toast.LENGTH_LONG).show();
+                String.format(Locale.getDefault(), getString(R.string.message_authorization_error), provider, message), Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -120,7 +121,7 @@ public class LoginActivity extends AppCompatActivity implements
     }
 
     private void onExploreAsGuestClicked() {
-        Toast.makeText(this, "Coming soon...", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, getString(R.string.label_coming_soon), Toast.LENGTH_LONG).show();
     }
 
     private void initialize() {
@@ -138,9 +139,7 @@ public class LoginActivity extends AppCompatActivity implements
             sharedPreferences.edit().putString(SIGN_IN_PROVIDER, signInManage.getProvider()).apply();
             signInManage.saveToken();
         }
-
         this.getClientContext().setSignInManager(signInManage);
-        RestOperations.initialize(this);
         LoginActivity.this.startActivity(new Intent(LoginActivity.this, MainActivity.class));
         LoginActivity.this.finish();
     }
