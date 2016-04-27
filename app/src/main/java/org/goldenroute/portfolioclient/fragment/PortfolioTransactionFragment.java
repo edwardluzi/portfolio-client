@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import org.goldenroute.portfolioclient.ClientContext;
 import org.goldenroute.portfolioclient.CreateTransactionActivity;
+import org.goldenroute.portfolioclient.IntentConstants;
 import org.goldenroute.portfolioclient.R;
 import org.goldenroute.portfolioclient.adapter.TransactionListAdapter;
 import org.goldenroute.portfolioclient.model.Account;
@@ -43,8 +44,6 @@ import retrofit2.Response;
 
 
 public class PortfolioTransactionFragment extends RefreshableFragment implements ListView.OnItemClickListener {
-    public static final String ARG_PID = "pid";
-    private static final int RC_EDIT = 101;
     private static final String TAG = PortfolioTransactionFragment.class.getName();
 
     private Long mPortfolioId;
@@ -60,7 +59,7 @@ public class PortfolioTransactionFragment extends RefreshableFragment implements
     public static PortfolioTransactionFragment newInstance(Long portfolioId) {
         PortfolioTransactionFragment fragment = new PortfolioTransactionFragment();
         Bundle args = new Bundle();
-        args.putLong(ARG_PID, portfolioId);
+        args.putLong(IntentConstants.ARG_PID, portfolioId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -70,7 +69,7 @@ public class PortfolioTransactionFragment extends RefreshableFragment implements
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mPortfolioId = getArguments().getLong(ARG_PID);
+            mPortfolioId = getArguments().getLong(IntentConstants.ARG_PID);
         }
     }
 
@@ -161,15 +160,15 @@ public class PortfolioTransactionFragment extends RefreshableFragment implements
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Transaction transaction = mTransactionListAdapter.getData().get(position);
         Intent intent = new Intent(getActivity(), CreateTransactionActivity.class);
-        intent.putExtra(CreateTransactionActivity.ARG_PID, mPortfolioId);
-        intent.putExtra(CreateTransactionActivity.ARG_TID, transaction.getId());
-        startActivityForResult(intent, RC_EDIT);
+        intent.putExtra(IntentConstants.ARG_PID, mPortfolioId);
+        intent.putExtra(IntentConstants.ARG_TID, transaction.getId());
+        startActivityForResult(intent, IntentConstants.RC_EDIT_TRANSACTION);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_EDIT) {
+        if (requestCode == IntentConstants.RC_EDIT_TRANSACTION) {
             refresh();
         }
     }

@@ -123,4 +123,12 @@
     <string name="message_authorization_error">%1$s authorization error: %2$s.</string>
 
     <string name="message_unknown_error">Unknown error.</string>
+    <string name="label_logout_and_exit">Logout &amp; Exit</string>
+
+    <string name="title_activity_send_logs">Send Logs</string>
+    <string name="label_send_logs">Send Logs</string>
+    <string name="label_skip_send_logs">Skip</string>
+    <string name="content_description_sorry">We are sorry!</string>
+    <string name="label_send_log_description"><![CDATA[<br>The application was crashed during last run.<br><br><b>Please tell us about this problem.</b><br><br>We have created an error report that you can send to us. We will treat this report as confidential and anonymous.]]></string>
+
 </resources>

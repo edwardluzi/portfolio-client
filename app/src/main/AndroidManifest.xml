@@ -11,10 +11,10 @@
     <application
         android:name=".ClientContext"
         android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_schema"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:fullBackupContent="@xml/backup_schema"
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -26,7 +26,6 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -76,7 +75,12 @@
         <activity
             android:name=".CreateTransactionActivity"
             android:label="@string/title_activity_add_transaction"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SendLogsActivity"
+            android:label="@string/title_activity_send_logs"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
+import java.io.File;
+
 public class SplashActivity extends AppCompatActivity {
     private static final long SPLASH_DELAY_MILLIS = 3000;
 
@@ -24,7 +26,19 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void gotoMain() {
-        SplashActivity.this.startActivity(new Intent(SplashActivity.this, LoginActivity.class));
-        SplashActivity.this.finish();
+        if (fileExists("stack.trace")) {
+            this.startActivity(new Intent(this, SendLogsActivity.class));
+        } else {
+            this.startActivity(new Intent(this, LoginActivity.class));
+        }
+        this.finish();
+    }
+
+    public boolean fileExists(String filename) {
+        File file = this.getFileStreamPath(filename);
+        if (file == null || !file.exists()) {
+            return false;
+        }
+        return true;
     }
 }

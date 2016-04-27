@@ -133,13 +133,13 @@ public class LoginActivity extends AppCompatActivity implements
         return (ClientContext) this.getApplication();
     }
 
-    private void gotoMain(SignInManager signInManage, boolean saveToken) {
+    private void gotoMain(SignInManager signInManager, boolean saveToken) {
         if (saveToken) {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-            sharedPreferences.edit().putString(SIGN_IN_PROVIDER, signInManage.getProvider()).apply();
-            signInManage.saveToken();
+            sharedPreferences.edit().putString(SIGN_IN_PROVIDER, signInManager.getProvider()).apply();
+            signInManager.saveToken();
         }
-        this.getClientContext().setSignInManager(signInManage);
+        this.getClientContext().setSignInManager(signInManager);
         LoginActivity.this.startActivity(new Intent(LoginActivity.this, MainActivity.class));
         LoginActivity.this.finish();
     }

@@ -22,6 +22,7 @@ import org.goldenroute.portfolioclient.fragment.MainPortfolioFragment;
 import org.goldenroute.portfolioclient.model.Account;
 import org.goldenroute.portfolioclient.rest.RestAsyncTask;
 import org.goldenroute.portfolioclient.rest.RestOperations;
+import org.goldenroute.portfolioclient.utils.TopExceptionHandler;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -50,10 +51,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Thread.setDefaultUncaughtExceptionHandler(new TopExceptionHandler(this));
         setContentView(R.layout.activity_main);
-
         ButterKnife.bind(this);
-
         setSupportActionBar(mToolbar);
 
         mDrawerToggle = createDrawerToggle();

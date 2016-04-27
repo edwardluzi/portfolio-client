@@ -17,6 +17,8 @@ public abstract class SignInManager {
 
     public abstract void SignIn();
 
+    public abstract void logout();
+
     public abstract boolean isValidToken();
 
     public abstract OAuth2Token getToken();

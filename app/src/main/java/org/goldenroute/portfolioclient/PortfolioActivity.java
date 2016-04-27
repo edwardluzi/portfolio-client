@@ -23,11 +23,6 @@ import butterknife.ButterKnife;
 
 public class PortfolioActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
 
-    public static final String POSITION = "pos";
-    public static final String ARG_PID = "pid";
-    private static final int RC_ADD = 1;
-    private static final int RC_EDIT = 2;
-
     private Long mPortfolioId;
 
     @Bind(R.id.toolbar_portfolio)
@@ -49,7 +44,7 @@ public class PortfolioActivity extends AppCompatActivity implements ViewPager.On
         mViewPager.setAdapter(new PortfolioFragmentPagerAdapter(getSupportFragmentManager()));
         mViewPager.addOnPageChangeListener(this);
         mTabLayout.setupWithViewPager(mViewPager);
-        mPortfolioId = getIntent().getExtras().getLong(ARG_PID);
+        mPortfolioId = getIntent().getExtras().getLong(IntentConstants.ARG_PID);
 
         setTitle();
     }
@@ -64,13 +59,13 @@ public class PortfolioActivity extends AppCompatActivity implements ViewPager.On
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(POSITION, mTabLayout.getSelectedTabPosition());
+        outState.putInt(IntentConstants.ARG_POS, mTabLayout.getSelectedTabPosition());
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        mViewPager.setCurrentItem(savedInstanceState.getInt(POSITION));
+        mViewPager.setCurrentItem(savedInstanceState.getInt(IntentConstants.ARG_POS));
     }
 
     @Override
@@ -96,14 +91,14 @@ public class PortfolioActivity extends AppCompatActivity implements ViewPager.On
 
         if (id == R.id.action_add_transaction) {
             Intent intent = new Intent(this, CreateTransactionActivity.class);
-            intent.putExtra(CreateTransactionActivity.ARG_PID, mPortfolioId);
-            intent.putExtra(CreateTransactionActivity.ARG_TID, Long.valueOf(0));
-            startActivityForResult(intent, RC_ADD);
+            intent.putExtra(IntentConstants.ARG_PID, mPortfolioId);
+            intent.putExtra(IntentConstants.ARG_TID, Long.valueOf(0));
+            startActivityForResult(intent, IntentConstants.RC_ADD_TRANSACTION);
             return true;
         } else if (id == R.id.action_edit_portfolio) {
             Intent intent = new Intent(this, CreatePortfolioListActivity.class);
-            intent.putExtra(CreatePortfolioListActivity.ARG_PID, mPortfolioId);
-            startActivityForResult(intent, RC_EDIT);
+            intent.putExtra(IntentConstants.ARG_PID, mPortfolioId);
+            startActivityForResult(intent, IntentConstants.RC_EDIT_PORTFOLIO);
             return true;
         }
 
@@ -113,11 +108,11 @@ public class PortfolioActivity extends AppCompatActivity implements ViewPager.On
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_ADD) {
+        if (requestCode == IntentConstants.RC_ADD_TRANSACTION) {
             if (resultCode == Activity.RESULT_OK) {
                 refresh();
             }
-        } else if (requestCode == RC_EDIT) {
+        } else if (requestCode == IntentConstants.RC_EDIT_PORTFOLIO) {
             mToolbar.post(new Runnable() {
                 public void run() {
                     setTitle();

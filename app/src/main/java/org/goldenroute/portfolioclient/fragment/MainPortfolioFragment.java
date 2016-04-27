@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import org.goldenroute.portfolioclient.ClientContext;
 import org.goldenroute.portfolioclient.CreatePortfolioListActivity;
+import org.goldenroute.portfolioclient.IntentConstants;
 import org.goldenroute.portfolioclient.PortfolioActivity;
 import org.goldenroute.portfolioclient.R;
 import org.goldenroute.portfolioclient.adapter.PortfolioListAdapter;
@@ -46,9 +47,6 @@ import retrofit2.Response;
 
 public class MainPortfolioFragment extends MainBaseFragment implements ListView.OnItemClickListener {
     private static final String TAG = MainPortfolioFragment.class.getName();
-
-    private static final int RC_ADD = 1;
-    private static final int RC_EDIT = 2;
 
     @Bind(R.id.list_view_portfolios)
     protected ListView mListViewPortfolios;
@@ -166,9 +164,9 @@ public class MainPortfolioFragment extends MainBaseFragment implements ListView.
 
         if (id == R.id.action_add_portfolio) {
             Intent intent = new Intent(getActivity(), CreatePortfolioListActivity.class);
-            intent.putExtra(CreatePortfolioListActivity.ARG_TYPE, 0L);
-            intent.putExtra(CreatePortfolioListActivity.ARG_PID, 0L);
-            startActivityForResult(intent, RC_ADD);
+            intent.putExtra(IntentConstants.ARG_TYPE, 0L);
+            intent.putExtra(IntentConstants.ARG_PID, 0L);
+            startActivityForResult(intent, IntentConstants.RC_ADD_PORTFOLIO);
             return true;
         }
 
@@ -179,8 +177,8 @@ public class MainPortfolioFragment extends MainBaseFragment implements ListView.
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Portfolio portfolio = mPortfolioListAdapter.getData().get(position);
         Intent intent = new Intent(getActivity(), PortfolioActivity.class);
-        intent.putExtra(PortfolioActivity.ARG_PID, portfolio.getId());
-        startActivityForResult(intent, RC_EDIT);
+        intent.putExtra(IntentConstants.ARG_PID, portfolio.getId());
+        startActivityForResult(intent, IntentConstants.RC_EDIT_PORTFOLIO);
     }
 
     @Override
@@ -204,17 +202,17 @@ public class MainPortfolioFragment extends MainBaseFragment implements ListView.
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == RC_ADD) {
+        if (requestCode == IntentConstants.RC_ADD_PORTFOLIO) {
             if (resultCode == Activity.RESULT_OK) {
-                Long portfolioId = data.getLongExtra(CreatePortfolioListActivity.ARG_PID, 0L);
+                Long portfolioId = data.getLongExtra(IntentConstants.ARG_PID, 0L);
 
                 if (portfolioId != 0) {
                     Intent intent = new Intent(getActivity(), PortfolioActivity.class);
-                    intent.putExtra(PortfolioActivity.ARG_PID, portfolioId);
-                    this.startActivityForResult(intent, RC_EDIT);
+                    intent.putExtra(IntentConstants.ARG_PID, portfolioId);
+                    this.startActivityForResult(intent, IntentConstants.RC_EDIT_PORTFOLIO);
                 }
             }
-        } else if (requestCode == RC_EDIT) {
+        } else if (requestCode == IntentConstants.RC_EDIT_PORTFOLIO) {
             refresh();
         }
     }

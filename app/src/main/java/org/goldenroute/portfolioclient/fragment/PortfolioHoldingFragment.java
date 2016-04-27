@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import org.goldenroute.portfolioclient.ClientContext;
+import org.goldenroute.portfolioclient.IntentConstants;
 import org.goldenroute.portfolioclient.R;
 import org.goldenroute.portfolioclient.adapter.HoldingListAdapter;
 import org.goldenroute.portfolioclient.model.Account;
@@ -21,7 +22,6 @@ import butterknife.ButterKnife;
 
 
 public class PortfolioHoldingFragment extends RefreshableFragment {
-    public static final String ARG_PID = "pid";
 
     private Long mPortfolioId;
 
@@ -36,7 +36,7 @@ public class PortfolioHoldingFragment extends RefreshableFragment {
     public static PortfolioHoldingFragment newInstance(Long portfolioId) {
         PortfolioHoldingFragment fragment = new PortfolioHoldingFragment();
         Bundle args = new Bundle();
-        args.putLong(ARG_PID, portfolioId);
+        args.putLong(IntentConstants.ARG_PID, portfolioId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -45,7 +45,7 @@ public class PortfolioHoldingFragment extends RefreshableFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mPortfolioId = getArguments().getLong(ARG_PID);
+            mPortfolioId = getArguments().getLong(IntentConstants.ARG_PID);
         }
     }
 

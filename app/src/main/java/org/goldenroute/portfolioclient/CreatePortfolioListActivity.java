@@ -30,9 +30,6 @@ import retrofit2.Response;
 public class CreatePortfolioListActivity extends AppCompatActivity {
     private static final String TAG = CreatePortfolioListActivity.class.getName();
 
-    public static final String ARG_PID = "pid";
-    public static final String ARG_TYPE = "type";
-
     @Bind(R.id.toolbar_create_portfolio_list)
     protected Toolbar mToolbar;
 
@@ -69,7 +66,7 @@ public class CreatePortfolioListActivity extends AppCompatActivity {
         setupSpinnerContext(mSpinnerAssetClass, R.array.portfolio_list_assert_classes);
         setupSpinnerContext(mSpinnerCurrency, R.array.portfolio_list_currencies);
 
-        mPortfolioId = getIntent().getLongExtra(ARG_PID, 0L);
+        mPortfolioId = getIntent().getLongExtra(IntentConstants.ARG_PID, 0L);
 
         if (mPortfolioId != 0) {
             Portfolio portfolio = getClientContext().getAccount().find(mPortfolioId);
@@ -190,7 +187,7 @@ public class CreatePortfolioListActivity extends AppCompatActivity {
                 Toast.makeText(this.getParentActivity(),
                         getString(mPortfolioId == 0 ? R.string.message_adding_portfolio_succeeded : R.string.message_modifying_portfolio_succeeded), Toast.LENGTH_LONG).show();
                 Intent intent = new Intent();
-                intent.putExtra(ARG_PID, mReturned.getId());
+                intent.putExtra(IntentConstants.ARG_PID, mReturned.getId());
                 setResult(RESULT_OK, intent);
                 finish();
 

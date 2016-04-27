@@ -1,0 +1,52 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context=".SendLogsActivity">
+
+    <ImageView
+        android:id="@+id/layout_send_log_logo"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:layout_alignParentTop="true"
+        android:contentDescription="@string/content_description_sorry"
+        android:scaleType="fitXY"
+        android:src="@drawable/sorry" />
+
+
+    <TextView
+        android:id="@+id/text_view_send_log_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/layout_send_log_command"
+        android:layout_below="@+id/layout_send_log_logo"
+        android:layout_gravity="center_vertical"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_margin="8dp" />
+
+    <LinearLayout
+        android:id="@+id/layout_send_log_command"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_send_logs"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/label_send_logs" />
+
+        <Button
+            android:id="@+id/button_skip_send_logs"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/label_skip_send_logs" />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -39,6 +39,10 @@ public class WeiboSignInManager extends SignInManager {
         mSsoHandler.authorize(new WeiboAuthListenerImpl());
     }
 
+    public void logout() {
+        WeiboTokenStore.clear(mActivity);
+    }
+
     public boolean isValidToken() {
         return mAccessToken != null && mAccessToken.isSessionValid();
     }

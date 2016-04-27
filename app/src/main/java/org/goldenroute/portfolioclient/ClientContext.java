@@ -1,6 +1,7 @@
 package org.goldenroute.portfolioclient;
 
 import android.app.Application;
+import android.content.Intent;
 
 import org.goldenroute.portfolioclient.model.Account;
 import org.goldenroute.portfolioclient.signin.SignInManager;

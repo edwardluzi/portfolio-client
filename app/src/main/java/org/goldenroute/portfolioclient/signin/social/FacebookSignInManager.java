@@ -37,6 +37,10 @@ public class FacebookSignInManager extends SignInManager {
         throw new UnsupportedOperationException("Not supported: sign in");
     }
 
+    public void logout() {
+        LoginManager.getInstance().logOut();
+    }
+
     public boolean isValidToken() {
         return mAccessToken != null && !mAccessToken.isExpired();
     }

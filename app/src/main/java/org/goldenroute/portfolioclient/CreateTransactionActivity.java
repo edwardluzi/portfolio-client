@@ -37,8 +37,6 @@ import retrofit2.Response;
 
 public class CreateTransactionActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public static final String ARG_PID = "pid";
-    public static final String ARG_TID = "tid";
     private static final String TAG = CreateTransactionActivity.class.getName();
 
     private Long mPortfolioId;
@@ -83,8 +81,8 @@ public class CreateTransactionActivity extends AppCompatActivity implements View
         setupDateText();
         setupSpinnerContext(mSpinnerType, R.array.transaction_types);
 
-        mPortfolioId = getIntent().getExtras().getLong(ARG_PID);
-        mTransactionId = getIntent().getExtras().getLong(ARG_TID);
+        mPortfolioId = getIntent().getExtras().getLong(IntentConstants.ARG_PID);
+        mTransactionId = getIntent().getExtras().getLong(IntentConstants.ARG_TID);
 
         if (mTransactionId != 0) {
             Transaction transaction = getClientContext().getAccount().find(mPortfolioId).find(mTransactionId);
@@ -290,7 +288,7 @@ public class CreateTransactionActivity extends AppCompatActivity implements View
                                 R.string.message_adding_transaction_succeeded : R.string.message_modifying_transaction_succeeded),
                         Toast.LENGTH_LONG).show();
                 Intent intent = new Intent();
-                intent.putExtra(ARG_TID, mTransactionId);
+                intent.putExtra(IntentConstants.ARG_TID, mTransactionId);
                 setResult(RESULT_OK, intent);
                 finish();
 

@@ -48,6 +48,7 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.android.support:support-v4:23.2.1'
 }
 
 task copyNativeLibs(type: Copy) {
