@@ -126,14 +126,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void refresh(Account account) {
-        getClientContext().setAccount(account);
+        ClientContext.getInstance().setAccount(account);
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.content_main_fragment_container);
         if (fragment instanceof MainBaseFragment)
             ((MainBaseFragment) fragment).refresh();
-    }
-
-    private ClientContext getClientContext() {
-        return (ClientContext) this.getApplication();
     }
 
     @Override

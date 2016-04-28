@@ -129,17 +129,12 @@ public class PortfolioActivity extends AppCompatActivity implements ViewPager.On
     }
 
     private void setTitle() {
-        Portfolio portfolio = getClientContext().getAccount().find(mPortfolioId);
+        Portfolio portfolio = ClientContext.getInstance().getAccount().find(mPortfolioId);
         if (portfolio != null) {
             this.setTitle(portfolio.getName());
             mToolbar.setTitle(portfolio.getName());
         }
     }
-
-    private ClientContext getClientContext() {
-        return (ClientContext) this.getApplication();
-    }
-
 
     public class PortfolioFragmentPagerAdapter extends FragmentPagerAdapter {
         private static final int NUM_ITEMS = 2;

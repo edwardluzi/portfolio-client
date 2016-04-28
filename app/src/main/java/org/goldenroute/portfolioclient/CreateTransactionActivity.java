@@ -85,7 +85,7 @@ public class CreateTransactionActivity extends AppCompatActivity implements View
         mTransactionId = getIntent().getExtras().getLong(IntentConstants.ARG_TID);
 
         if (mTransactionId != 0) {
-            Transaction transaction = getClientContext().getAccount().find(mPortfolioId).find(mTransactionId);
+            Transaction transaction = ClientContext.getInstance().getAccount().find(mPortfolioId).find(mTransactionId);
 
             mEditTextDate.setText(mDateFormatter.format(transaction.getDate()));
             mEditTextTicker.setText(transaction.getTicker());
@@ -205,7 +205,7 @@ public class CreateTransactionActivity extends AppCompatActivity implements View
         Transaction transaction;
 
         if (mTransactionId != 0) {
-            transaction = getClientContext().getAccount().find(mPortfolioId).find(mTransactionId);
+            transaction = ClientContext.getInstance().getAccount().find(mPortfolioId).find(mTransactionId);
         } else {
             transaction = new Transaction();
         }
@@ -238,10 +238,6 @@ public class CreateTransactionActivity extends AppCompatActivity implements View
         return value;
     }
 
-    private ClientContext getClientContext() {
-        return (ClientContext) this.getApplication();
-    }
-
     public class AddingTransactionTask extends RestAsyncTask<Void, Void, Boolean> {
 
         private Transaction mTransaction;
@@ -267,7 +263,7 @@ public class CreateTransactionActivity extends AppCompatActivity implements View
                 mReturned = response.body();
 
                 if (response.isSuccessful() && mReturned != null) {
-                    getClientContext().getAccount().addOrUpdate(mReturned);
+                    ClientContext.getInstance().getAccount().addOrUpdate(mReturned);
                 } else {
                     parseError(response);
                 }

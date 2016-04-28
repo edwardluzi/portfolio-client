@@ -71,7 +71,7 @@ public class PortfolioHoldingFragment extends RefreshableFragment {
     public void refresh() {
         mListViewHoldings.post(new Runnable() {
             public void run() {
-                Account account = getClientContext().getAccount();
+                Account account = ClientContext.getInstance().getAccount();
                 if (account != null) {
                     Portfolio portfolio = account.find(mPortfolioId);
                     if (portfolio != null) {
@@ -85,9 +85,5 @@ public class PortfolioHoldingFragment extends RefreshableFragment {
                 }
             }
         });
-    }
-
-    private ClientContext getClientContext() {
-        return (ClientContext) this.getActivity().getApplication();
     }
 }

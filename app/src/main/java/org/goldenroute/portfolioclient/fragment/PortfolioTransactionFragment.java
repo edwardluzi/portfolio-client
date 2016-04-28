@@ -177,7 +177,7 @@ public class PortfolioTransactionFragment extends RefreshableFragment implements
     public void refresh() {
         mListViewTransactions.post(new Runnable() {
             public void run() {
-                Account account = getClientContext().getAccount();
+                Account account = ClientContext.getInstance().getAccount();
                 if (account != null) {
                     Portfolio portfolio = account.find(mPortfolioId);
                     if (portfolio != null) {
@@ -191,10 +191,6 @@ public class PortfolioTransactionFragment extends RefreshableFragment implements
                 }
             }
         });
-    }
-
-    private ClientContext getClientContext() {
-        return (ClientContext) this.getActivity().getApplication();
     }
 
     private void showToolbar(boolean show) {
@@ -227,7 +223,7 @@ public class PortfolioTransactionFragment extends RefreshableFragment implements
                 Response<Portfolio> response = call.execute();
                 mReturned = response.body();
                 if (response.isSuccessful() && mReturned != null) {
-                    getClientContext().getAccount().addOrUpdate(mReturned);
+                    ClientContext.getInstance().getAccount().addOrUpdate(mReturned);
                 } else {
                     parseError(response);
                 }

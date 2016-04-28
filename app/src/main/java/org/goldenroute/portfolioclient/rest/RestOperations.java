@@ -51,6 +51,7 @@ public class RestOperations {
     private AccountService mAccountService;
     private PortfolioService mPortfolioService;
     private TransactionService mTransactionService;
+    private String mAccessToken;
 
     private RestOperations() {
     }
@@ -59,12 +60,14 @@ public class RestOperations {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
         String baseUrl = prefs.getString("pref_key_server_address", activity.getString(R.string.pref_default_server_address)) + "/api/v1/";
-        ClientContext clientContext = (ClientContext) activity.getApplication();
-        final SignInManager signInManager = clientContext.getSignInManager();
+        ClientContext clientContext = ClientContext.getInstance();
+        SignInManager signInManager = clientContext.getSignInManager();
+        mAccessToken = signInManager.getToken().getAccessToken();
+
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
-                Request newRequest = chain.request().newBuilder().addHeader("Authorization", "Bearer " + signInManager.getToken().getAccessToken()).build();
+                Request newRequest = chain.request().newBuilder().addHeader("Authorization", "Bearer " + mAccessToken).build();
                 return chain.proceed(newRequest);
             }
         };

@@ -185,7 +185,7 @@ public class MainPortfolioFragment extends MainBaseFragment implements ListView.
     public void refresh() {
         mListViewPortfolios.post(new Runnable() {
             public void run() {
-                Account account = getClientContext().getAccount();
+                Account account = ClientContext.getInstance().getAccount();
                 if (account != null) {
                     List<Portfolio> portfolios = account.getPortfolios();
                     mPortfolioListAdapter.getData().clear();
@@ -215,10 +215,6 @@ public class MainPortfolioFragment extends MainBaseFragment implements ListView.
         } else if (requestCode == IntentConstants.RC_EDIT_PORTFOLIO) {
             refresh();
         }
-    }
-
-    private ClientContext getClientContext() {
-        return (ClientContext) this.getActivity().getApplication();
     }
 
     private void showToolbar(boolean show) {
@@ -268,7 +264,7 @@ public class MainPortfolioFragment extends MainBaseFragment implements ListView.
 
             if (success && this.mResult) {
                 Toast.makeText(this.getParentActivity(), getString(R.string.message_deleting_portfolio_succeeded), Toast.LENGTH_LONG).show();
-                getClientContext().getAccount().remove(this.mPortfolioIds);
+                ClientContext.getInstance().getAccount().remove(this.mPortfolioIds);
                 refresh();
             } else {
                 Toast.makeText(this.getParentActivity(),

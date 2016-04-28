@@ -50,20 +50,13 @@ public class ProfileActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
-
         mButtonLogoutAndExit.setOnClickListener(this);
-    }
-
-    private ClientContext getClientContext() {
-        return (ClientContext) this.getApplication();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
-        Account account = getClientContext().getAccount();
-
+        Account account = ClientContext.getInstance().getAccount();
         if (account != null) {
             Profile profile = account.getProfile();
 
@@ -71,18 +64,17 @@ public class ProfileActivity extends AppCompatActivity implements
             mEditTextScreenName.setText(profile.getScreenName());
             mEditTextLocation.setText(profile.getLocation());
 
-//            Picasso.with(this)
-//                    .load(profile.getAvatarUrl())
-//                    .placeholder(R.drawable.user_place_holder)
-//                    .error(R.drawable.user_place_holder)
-//                    .into(mImageViewAvatar);
+            Picasso.with(this)
+                    .load(profile.getAvatarUrl())
+                    .placeholder(R.drawable.user_place_holder)
+                    .error(R.drawable.user_place_holder)
+                    .into(mImageViewAvatar);
         }
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
             case R.id.button_logout_and_exit:
                 logout();
                 break;
@@ -90,7 +82,7 @@ public class ProfileActivity extends AppCompatActivity implements
     }
 
     private void logout() {
-        SignInManager signInManager = this.getClientContext().getSignInManager();
+        SignInManager signInManager = ClientContext.getInstance().getSignInManager();
         signInManager.logout();
         setResult(RESULT_OK, new Intent());
         finish();

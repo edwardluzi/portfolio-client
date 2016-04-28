@@ -69,7 +69,7 @@ public class CreatePortfolioListActivity extends AppCompatActivity {
         mPortfolioId = getIntent().getLongExtra(IntentConstants.ARG_PID, 0L);
 
         if (mPortfolioId != 0) {
-            Portfolio portfolio = getClientContext().getAccount().find(mPortfolioId);
+            Portfolio portfolio = ClientContext.getInstance().getAccount().find(mPortfolioId);
             mSpinnerType.setSelection(0);
             m_EditTextName.setText(portfolio.getName());
             mSpinnerAssetClass.setSelection(portfolio.getPrimaryAssetClass().ordinal());
@@ -124,7 +124,7 @@ public class CreatePortfolioListActivity extends AppCompatActivity {
             return;
         }
 
-        Portfolio portfolio = mPortfolioId != 0 ? getClientContext().getAccount().find(mPortfolioId) : new Portfolio();
+        Portfolio portfolio = mPortfolioId != 0 ? ClientContext.getInstance().getAccount().find(mPortfolioId) : new Portfolio();
 
         portfolio.setName(m_EditTextName.getText().toString());
         portfolio.setPrimaryAssetClass(AssetClass.values()[mSpinnerAssetClass.getSelectedItemPosition()]);
@@ -134,10 +134,6 @@ public class CreatePortfolioListActivity extends AppCompatActivity {
 
         mCreatePortfolioTask = new CreatingPortfolioTask(this, portfolio);
         mCreatePortfolioTask.execute((Void) null);
-    }
-
-    private ClientContext getClientContext() {
-        return (ClientContext) this.getApplication();
     }
 
     public class CreatingPortfolioTask extends RestAsyncTask<Void, Void, Boolean> {
@@ -167,7 +163,7 @@ public class CreatePortfolioListActivity extends AppCompatActivity {
                 response = call.execute();
                 mReturned = response.body();
                 if (response.isSuccessful() && mReturned != null) {
-                    getClientContext().getAccount().addOrUpdate(mReturned);
+                    ClientContext.getInstance().getAccount().addOrUpdate(mReturned);
                 } else {
                     parseError(response);
                 }
