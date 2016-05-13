@@ -14,6 +14,8 @@ public class Profile {
 
     private String location;
 
+    private String wechatId;
+
     public Long getId() {
         return id;
     }
@@ -56,5 +58,15 @@ public class Profile {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getWechatId()
+    {
+        return wechatId;
+    }
+
+    public void setWechatId(String wechatId)
+    {
+        this.wechatId = wechatId;
     }
 }

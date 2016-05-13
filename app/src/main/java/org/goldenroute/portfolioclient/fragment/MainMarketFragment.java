@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.goldenroute.portfolioclient.ClientContext;
 import org.goldenroute.portfolioclient.R;
 
 
@@ -42,6 +44,18 @@ public class MainMarketFragment extends MainBaseFragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+
+        MenuItem menuItemProfile = menu.findItem(R.id.action_profile);
+
+        if (ClientContext.getInstance().getAccount() != null) {
+            menuItemProfile.setEnabled(true);
+        } else {
+            menuItemProfile.setEnabled(false);
+        }
+    }
 
     @Override
     public void refresh() {

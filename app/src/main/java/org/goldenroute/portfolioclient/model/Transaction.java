@@ -12,9 +12,9 @@ public class Transaction {
 
     private Long id;
 
-    private Date date;
+    private Date timestamp;
     private String ticker;
-    private String issuer;
+
     private Type type;
     private BigDecimal price;
     private BigDecimal amount;
@@ -25,12 +25,12 @@ public class Transaction {
         return id;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getTimestamp() {
+        return timestamp;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setTimestamp(Date date) {
+        this.timestamp = date;
     }
 
     public String getTicker() {
@@ -39,14 +39,6 @@ public class Transaction {
 
     public void setTicker(String ticker) {
         this.ticker = ticker;
-    }
-
-    public String getIssuer() {
-        return issuer;
-    }
-
-    public void setIssuer(String issuer) {
-        this.issuer = issuer;
     }
 
     public Type getType() {

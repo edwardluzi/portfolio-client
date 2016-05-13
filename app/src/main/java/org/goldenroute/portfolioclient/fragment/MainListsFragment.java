@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.goldenroute.portfolioclient.ClientContext;
 import org.goldenroute.portfolioclient.R;
 
 public class MainListsFragment extends MainBaseFragment {
@@ -29,16 +31,29 @@ public class MainListsFragment extends MainBaseFragment {
     }
 
     @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        this.setTitle(getString(R.string.label_nav_lists));
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.main, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
 
-        this.setTitle(getString(R.string.label_nav_lists));
+        MenuItem menuItemProfile = menu.findItem(R.id.action_profile);
+
+        if (ClientContext.getInstance().getAccount() != null) {
+            menuItemProfile.setEnabled(true);
+        } else {
+            menuItemProfile.setEnabled(false);
+        }
     }
 
     @Override

@@ -229,8 +229,9 @@ public class PortfolioTransactionFragment extends RefreshableFragment implements
                 }
             } catch (IOException e) {
                 Log.e(TAG, e.getMessage());
+                parseError(e);
+                mReturned = null;
             }
-
             return true;
         }
 

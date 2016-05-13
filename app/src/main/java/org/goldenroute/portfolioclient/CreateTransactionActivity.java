@@ -87,7 +87,7 @@ public class CreateTransactionActivity extends AppCompatActivity implements View
         if (mTransactionId != 0) {
             Transaction transaction = ClientContext.getInstance().getAccount().find(mPortfolioId).find(mTransactionId);
 
-            mEditTextDate.setText(mDateFormatter.format(transaction.getDate()));
+            mEditTextDate.setText(mDateFormatter.format(transaction.getTimestamp()));
             mEditTextTicker.setText(transaction.getTicker());
             mSpinnerType.setSelection(transaction.getType().ordinal());
 
@@ -210,7 +210,7 @@ public class CreateTransactionActivity extends AppCompatActivity implements View
             transaction = new Transaction();
         }
 
-        transaction.setDate(date);
+        transaction.setTimestamp(date);
         transaction.setTicker(ticker);
         transaction.setType(type);
         transaction.setPrice(price);
@@ -270,6 +270,8 @@ public class CreateTransactionActivity extends AppCompatActivity implements View
 
             } catch (IOException e) {
                 Log.e(TAG, e.getMessage());
+                parseError(e);
+                mReturned = null;
             }
             return true;
         }

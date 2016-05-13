@@ -7,9 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import org.goldenroute.portfolioclient.AboutActivity;
-import org.goldenroute.portfolioclient.CreatePortfolioListActivity;
 import org.goldenroute.portfolioclient.IntentConstants;
-import org.goldenroute.portfolioclient.PortfolioActivity;
 import org.goldenroute.portfolioclient.ProfileActivity;
 import org.goldenroute.portfolioclient.R;
 import org.goldenroute.portfolioclient.SettingsActivity;
@@ -30,10 +28,10 @@ public abstract class MainBaseFragment extends RefreshableFragment {
             this.startActivity(new Intent(getActivity(), SettingsActivity.class));
             return true;
         } else if (id == R.id.action_profile) {
-                 this.startActivityForResult(new Intent(getActivity(), ProfileActivity.class), IntentConstants.RC_PROFILE);
+            this.startActivityForResult(new Intent(getActivity(), ProfileActivity.class), IntentConstants.RC_PROFILE);
             return true;
         } else if (id == R.id.action_about) {
-            this.startActivity(new Intent(getActivity(), AboutActivity.class));
+            showAboutDialog();
             return true;
         }
 
@@ -59,5 +57,9 @@ public abstract class MainBaseFragment extends RefreshableFragment {
                 this.getActivity().finish();
             }
         }
+    }
+
+    protected void showAboutDialog() {
+        this.startActivity(new Intent(getActivity(), AboutActivity.class));
     }
 }

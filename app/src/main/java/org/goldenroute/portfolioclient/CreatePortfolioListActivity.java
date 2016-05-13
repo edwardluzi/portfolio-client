@@ -169,6 +169,8 @@ public class CreatePortfolioListActivity extends AppCompatActivity {
                 }
             } catch (IOException e) {
                 Log.e(TAG, e.getMessage());
+                parseError(e);
+                mReturned = null;
             }
             return true;
         }

@@ -37,8 +37,8 @@
             android:id="@+id/edit_text_profile_user_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:enabled="true"
-            android:inputType="text"
+            android:inputType="none"
+            android:focusable="false"
             android:paddingLeft="10dp"
             android:paddingRight="10dp" />
 
@@ -53,6 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
+            android:focusable="false"
             android:paddingLeft="10dp"
             android:paddingRight="10dp" />
 
@@ -67,8 +68,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
+            android:focusable="false"
             android:paddingLeft="10dp"
             android:paddingRight="10dp" />
+
+        <Button
+            android:id="@+id/button_bind_to_wechat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/label_bind_to_wechat" />
 
         <Button
             android:id="@+id/button_logout_and_exit"

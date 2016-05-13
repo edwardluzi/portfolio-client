@@ -93,5 +93,10 @@ public abstract class RestAsyncTask<Params, Progress, Result> extends AsyncTask<
 
         return mError;
     }
+
+    protected String parseError(Exception e) {
+        mError = e.getMessage();
+        return mError;
+    }
 }
 

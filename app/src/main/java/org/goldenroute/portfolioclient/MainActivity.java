@@ -156,7 +156,9 @@ public class MainActivity extends AppCompatActivity
             } catch (IOException e) {
                 Log.e(TAG, e.getMessage());
                 mAccount = null;
+                parseError(e);
             }
+
             return true;
         }
 

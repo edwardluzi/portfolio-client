@@ -50,7 +50,10 @@ public class RestOperations {
     private Retrofit mRetrofit;
     private AccountService mAccountService;
     private PortfolioService mPortfolioService;
+    private QRCodeService mQRCodeService;
     private TransactionService mTransactionService;
+    private ProfileService mProfileService;
+
     private String mAccessToken;
 
     private RestOperations() {
@@ -100,6 +103,8 @@ public class RestOperations {
         mAccountService = mRetrofit.create(AccountService.class);
         mPortfolioService = mRetrofit.create(PortfolioService.class);
         mTransactionService = mRetrofit.create(TransactionService.class);
+        mQRCodeService = mRetrofit.create(QRCodeService.class);
+        mProfileService = mRetrofit.create(ProfileService.class);
     }
 
     public AccountService getAccountService() {
@@ -112,5 +117,13 @@ public class RestOperations {
 
     public TransactionService getTransactionService() {
         return this.mTransactionService;
+    }
+
+    public QRCodeService getQRCodeService() {
+        return mQRCodeService;
+    }
+
+    public ProfileService getProfileService() {
+        return mProfileService;
     }
 }

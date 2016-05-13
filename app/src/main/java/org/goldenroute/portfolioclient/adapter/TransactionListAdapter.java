@@ -70,9 +70,9 @@ public class TransactionListAdapter extends ToggleAdapter {
 
         Transaction summary = mTransactions.get(position);
 
-        viewHolder.getTextViewDate().setText(mDateFormatter.format(summary.getDate()));
+        viewHolder.getTextViewDate().setText(mDateFormatter.format(summary.getTimestamp()));
 
-        if (position > 0 && mTransactions.get(position - 1).getDate().compareTo(summary.getDate()) == 0) {
+        if (position > 0 && mTransactions.get(position - 1).getTimestamp().compareTo(summary.getTimestamp()) == 0) {
             viewHolder.getTextViewDate().setVisibility(View.GONE);
         }
 

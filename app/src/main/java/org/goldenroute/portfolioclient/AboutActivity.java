@@ -1,8 +1,15 @@
 package org.goldenroute.portfolioclient;
 
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.os.Bundle;
+import android.text.Html;
+import android.text.util.Linkify;
+import android.widget.TextView;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class AboutActivity extends AppCompatActivity {
 
@@ -10,7 +17,24 @@ public class AboutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_about);
-        setSupportActionBar(toolbar);
+
+        TextView textView = (TextView) findViewById(R.id.text_view_about_info);
+        textView.setText(Html.fromHtml(readRawTextFile(R.raw.about)));
+        Linkify.addLinks(textView, Linkify.ALL);
+    }
+
+    public String readRawTextFile(int id) {
+
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getResources().openRawResource(id)));
+        StringBuilder text = new StringBuilder();
+        String line;
+
+        try {
+            while ((line = bufferedReader.readLine()) != null) text.append(line);
+        } catch (IOException e) {
+            return "";
+        }
+
+        return text.toString();
     }
 }

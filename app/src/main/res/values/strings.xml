@@ -13,8 +13,9 @@
     <string name="content_description_wechat_sign_in">Wechat sign in</string>
     <string name="content_description_weibo_sign_in">Weibo sign in</string>
     <string name="content_description_navigation">boating</string>
+    <string name="content_description_logo">log</string>
     <string name="content_description_avatar">Avatar</string>
-    <string name="title_activity_about">AboutActivity</string>
+    <string name="title_activity_about">About this app</string>
     <string name="title_activity_create_portfolio">Create Portfolio</string>
     <string name="title_activity_edit_portfolio">Edit Portfolio</string>
     <string name="title_activity_profile">Profile</string>
@@ -41,6 +42,7 @@
     <string name="label_coming_soon">Coming soon...</string>
     <string name="label_delete">Delete</string>
     <string name="label_cancel">Cancel</string>
+    <string name="label_okay">Okay</string>
     <string name="label_items_selected">%1$s selected</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -122,6 +124,10 @@
     <string name="message_authorization_succeeded">%1$s authorization succeeded.</string>
     <string name="message_authorization_error">%1$s authorization error: %2$s.</string>
 
+    <string name="message_binding_account_succeeded">Binding account succeeded.</string>
+    <string name="message_binding_account_failed">Binding account failed: %1$s.</string>
+
+
     <string name="message_unknown_error">Unknown error.</string>
     <string name="label_logout_and_exit">Logout &amp; Exit</string>
 
@@ -130,5 +136,8 @@
     <string name="label_skip_send_logs">Skip</string>
     <string name="content_description_sorry">We are sorry!</string>
     <string name="label_send_log_description"><![CDATA[<br>The application was crashed during last run.<br><br><b>Please tell us about this problem.</b><br><br>We have created an error report that you can send to us. We will treat this report as confidential and anonymous.]]></string>
+    <string name="label_bind_to_wechat">Bind to Wechat</string>
+    <string name="label_unbind_to_wechat">Unbind to Wechat</string>
+    <string name="prompt_bing_to_wechat">Please type your binding key:</string>
 
 </resources>

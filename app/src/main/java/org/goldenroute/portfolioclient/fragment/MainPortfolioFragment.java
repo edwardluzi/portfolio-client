@@ -155,6 +155,22 @@ public class MainPortfolioFragment extends MainBaseFragment implements ListView.
     }
 
     @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+
+        MenuItem menuItemProfile = menu.findItem(R.id.action_profile);
+        MenuItem menuItemAddPortfolio = menu.findItem(R.id.action_add_portfolio);
+
+        if (ClientContext.getInstance().getAccount() != null) {
+            menuItemProfile.setEnabled(true);
+            menuItemAddPortfolio.setEnabled(true);
+        } else {
+            menuItemProfile.setEnabled(false);
+            menuItemAddPortfolio.setEnabled(false);
+        }
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         // Handle action bar item clicks here. The action bar will
@@ -253,6 +269,8 @@ public class MainPortfolioFragment extends MainBaseFragment implements ListView.
                 }
             } catch (IOException e) {
                 Log.e(TAG, e.getMessage());
+                parseError(e);
+                mResult = false;
             }
             return true;
         }
