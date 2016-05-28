@@ -7,10 +7,10 @@ public class OAuth2Token {
     private Long mExpiresIn;
 
     public OAuth2Token(String user, String accessToken, String refreshToken, Long expiresIn) {
-        this.mUser = user;
-        this.mAccessToken = accessToken;
-        this.mRefreshToken = refreshToken;
-        this.mExpiresIn = expiresIn;
+        mUser = user;
+        mAccessToken = accessToken;
+        mRefreshToken = refreshToken;
+        mExpiresIn = expiresIn;
     }
 
     public String getUser() {
@@ -18,7 +18,7 @@ public class OAuth2Token {
     }
 
     public void setUser(String user) {
-        this.mUser = user;
+        mUser = user;
     }
 
     public String getAccessToken() {
@@ -26,15 +26,15 @@ public class OAuth2Token {
     }
 
     public void setAccessToken(String accessToken) {
-        this.mAccessToken = accessToken;
+        mAccessToken = accessToken;
     }
 
     public String getRefreshToken() {
         return mRefreshToken;
     }
 
-    public void setRefreshToken(String mRefreshToken) {
-        this.mRefreshToken = mRefreshToken;
+    public void setRefreshToken(String refreshToken) {
+        mRefreshToken = refreshToken;
     }
 
     public Long getExpiresIn() {
@@ -42,6 +42,6 @@ public class OAuth2Token {
     }
 
     public void setExpiresIn(Long expiresIn) {
-        this.mExpiresIn = expiresIn;
+        mExpiresIn = expiresIn;
     }
 }

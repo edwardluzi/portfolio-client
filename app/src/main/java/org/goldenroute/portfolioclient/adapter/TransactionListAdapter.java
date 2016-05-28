@@ -21,8 +21,8 @@ public class TransactionListAdapter extends ToggleAdapter {
 
     public TransactionListAdapter(Activity activity, List<Transaction> transactions) {
         super();
-        this.mActivity = activity;
-        this.mTransactions = transactions;
+        mActivity = activity;
+        mTransactions = transactions;
     }
 
     public List<Transaction> getData() {
@@ -99,14 +99,14 @@ public class TransactionListAdapter extends ToggleAdapter {
         private TextView mTextViewTotal;
 
         public ViewHolder(TextView textViewDate, TextView textViewTicker, TextView textViewType, TextView textViewPrice, TextView textViewAmount, TextView textViewCommission, TextView textViewOtherCharge, TextView textViewTotal) {
-            this.mTextViewDate = textViewDate;
-            this.mTextViewTicker = textViewTicker;
-            this.mTextViewType = textViewType;
-            this.mTextViewPrice = textViewPrice;
-            this.mTextViewAmount = textViewAmount;
-            this.mTextViewCommission = textViewCommission;
-            this.mTextViewOtherCharge = textViewOtherCharge;
-            this.mTextViewTotal = textViewTotal;
+            mTextViewDate = textViewDate;
+            mTextViewTicker = textViewTicker;
+            mTextViewType = textViewType;
+            mTextViewPrice = textViewPrice;
+            mTextViewAmount = textViewAmount;
+            mTextViewCommission = textViewCommission;
+            mTextViewOtherCharge = textViewOtherCharge;
+            mTextViewTotal = textViewTotal;
         }
 
         public TextView getTextViewDate() {

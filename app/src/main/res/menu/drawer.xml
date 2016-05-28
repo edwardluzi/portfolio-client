@@ -3,7 +3,6 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_portfolios"
             android:icon="@android:drawable/ic_dialog_email"
             android:title="@string/label_nav_portfolios" />
         <item

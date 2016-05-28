@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -23,7 +22,6 @@ import org.goldenroute.portfolioclient.rest.RestAsyncTask;
 import org.goldenroute.portfolioclient.rest.RestOperations;
 import org.goldenroute.portfolioclient.signin.SignInManager;
 
-import java.io.IOException;
 import java.util.Locale;
 
 import butterknife.Bind;
@@ -81,8 +79,8 @@ public class ProfileActivity extends AppCompatActivity implements
 
             Picasso.with(this)
                     .load(profile.getAvatarUrl())
-                    .placeholder(R.drawable.user_place_holder)
-                    .error(R.drawable.user_place_holder)
+                    .placeholder(R.drawable.iv_user_place_holder)
+                    .error(R.drawable.iv_user_place_holder)
                     .into(mImageViewAvatar);
 
             if (profile.getWechatId() != null && profile.getWechatId().length() > 0) {
@@ -156,12 +154,15 @@ public class ProfileActivity extends AppCompatActivity implements
                 Profile profile = ClientContext.getInstance().getAccount().getProfile();
                 Call<Boolean> call = RestOperations.getInstance().getProfileService().bindWechat(profile.getId(), mParameter);
                 Response<Boolean> response = call.execute();
-                mResult = response.body();
-                if (!response.isSuccessful() || mResult == null) {
+                if (response.isSuccessful()) {
+                    mResult = response.body();
+                }
+                if (mResult == null) {
                     parseError(response);
                 }
-            } catch (IOException e) {
-                Log.e(TAG, e.getMessage());
+            } catch (Exception e) {
+                mResult = null;
+                parseError(e);
             }
             return true;
         }
@@ -170,12 +171,12 @@ public class ProfileActivity extends AppCompatActivity implements
         protected void onPostExecute(final Boolean success) {
             super.onPostExecute(success);
             if (success && mResult != null && mResult) {
-                Toast.makeText(this.getParentActivity(),
+                Toast.makeText(getParentActivity(),
                         getString(R.string.message_binding_account_succeeded), Toast.LENGTH_LONG).show();
 
                 mButtonBindToWechat.setVisibility(View.GONE);
             } else {
-                Toast.makeText(this.getParentActivity(),
+                Toast.makeText(getParentActivity(),
                         String.format(Locale.getDefault(),
                                 getString(R.string.message_binding_account_failed),
                                 getError()),

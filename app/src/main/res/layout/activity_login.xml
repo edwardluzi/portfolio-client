@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/sailing_blur"
+    android:background="@drawable/bk_sailing_blur"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -13,16 +13,14 @@
     tools:context=".LoginActivity">
 
     <ImageView
-        android:id="@+id/image_view_logo"
         android:layout_width="160dp"
         android:layout_height="160dp"
         android:layout_margin="8dp"
         android:adjustViewBounds="true"
         android:contentDescription="@string/content_description_boating"
-        android:src="@drawable/boating_white" />
+        android:src="@drawable/iv_boating_white" />
 
     <TextView
-        android:id="@+id/text_view_sign_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -46,7 +44,6 @@
             android:orientation="vertical">
 
             <ImageButton
-                android:id="@+id/image_button_wechat_sign_In"
                 android:layout_width="196dp"
                 android:layout_height="28dp"
                 android:layout_margin="8dp"
@@ -73,7 +70,6 @@
                 android:layout_width="196dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp" />
-
 
         </LinearLayout>
 

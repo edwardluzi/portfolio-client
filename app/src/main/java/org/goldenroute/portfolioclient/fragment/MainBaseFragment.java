@@ -25,10 +25,10 @@ public abstract class MainBaseFragment extends RefreshableFragment {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            this.startActivity(new Intent(getActivity(), SettingsActivity.class));
+            startActivity(new Intent(getActivity(), SettingsActivity.class));
             return true;
         } else if (id == R.id.action_profile) {
-            this.startActivityForResult(new Intent(getActivity(), ProfileActivity.class), IntentConstants.RC_PROFILE);
+            startActivityForResult(new Intent(getActivity(), ProfileActivity.class), IntentConstants.RC_PROFILE);
             return true;
         } else if (id == R.id.action_about) {
             showAboutDialog();
@@ -54,12 +54,12 @@ public abstract class MainBaseFragment extends RefreshableFragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == IntentConstants.RC_PROFILE) {
             if (resultCode == Activity.RESULT_OK) {
-                this.getActivity().finish();
+                getActivity().finish();
             }
         }
     }
 
     protected void showAboutDialog() {
-        this.startActivity(new Intent(getActivity(), AboutActivity.class));
+        startActivity(new Intent(getActivity(), AboutActivity.class));
     }
 }

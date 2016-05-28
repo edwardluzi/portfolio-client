@@ -19,8 +19,8 @@ public class HoldingListAdapter extends BaseAdapter {
 
     public HoldingListAdapter(Activity activity, List<Holding> holdings) {
         super();
-        this.mActivity = activity;
-        this.mHoldings = holdings;
+        mActivity = activity;
+        mHoldings = holdings;
     }
 
     public List<Holding> getData() {
@@ -91,14 +91,14 @@ public class HoldingListAdapter extends BaseAdapter {
         private TextView mTextViewTotalChangePercentage;
 
         public ViewHolder(TextView textViewTicker, TextView textViewAmount, TextView textViewValue, TextView textViewCost, TextView textViewDailyChange, TextView textViewDailyChangePercentage, TextView textViewTotalChange, TextView textViewTotalChangePercentage) {
-            this.mTextViewTicker = textViewTicker;
-            this.mTextViewAmount = textViewAmount;
-            this.mTextViewValue = textViewValue;
-            this.mTextViewCost = textViewCost;
-            this.mTextViewDailyChange = textViewDailyChange;
-            this.mTextViewDailyChangePercentage = textViewDailyChangePercentage;
-            this.mTextViewTotalChange = textViewTotalChange;
-            this.mTextViewTotalChangePercentage = textViewTotalChangePercentage;
+            mTextViewTicker = textViewTicker;
+            mTextViewAmount = textViewAmount;
+            mTextViewValue = textViewValue;
+            mTextViewCost = textViewCost;
+            mTextViewDailyChange = textViewDailyChange;
+            mTextViewDailyChangePercentage = textViewDailyChangePercentage;
+            mTextViewTotalChange = textViewTotalChange;
+            mTextViewTotalChangePercentage = textViewTotalChangePercentage;
         }
 
         public TextView getTextViewTicker() {

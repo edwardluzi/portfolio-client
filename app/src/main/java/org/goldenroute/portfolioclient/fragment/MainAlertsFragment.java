@@ -35,7 +35,7 @@ public class MainAlertsFragment extends MainBaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        this.setTitle(getString(R.string.label_nav_alerts));
+        setTitle(getString(R.string.label_nav_alerts));
     }
 
     @Override

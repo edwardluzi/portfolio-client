@@ -5,13 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
-import android.text.SpannableString;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -68,10 +66,10 @@ public class SendLogsActivity extends AppCompatActivity implements View.OnClickL
                 report.append(line);
                 report.append(IntentConstants.NEW_LINE);
             }
-        } catch (FileNotFoundException fe) {
-            fe.printStackTrace();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
+            reader.close();
+            deleteFile("stack.trace");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         Intent sendIntent = new Intent(Intent.ACTION_SEND);
@@ -81,7 +79,7 @@ public class SendLogsActivity extends AppCompatActivity implements View.OnClickL
         sendIntent.putExtra(Intent.EXTRA_TEXT, report.toString());
 
         try {
-            this.startActivityForResult(sendIntent, IntentConstants.RC_EMAIL);
+            startActivityForResult(sendIntent, IntentConstants.RC_EMAIL);
         } catch (ActivityNotFoundException ae) {
             ae.printStackTrace();
         }
@@ -91,13 +89,12 @@ public class SendLogsActivity extends AppCompatActivity implements View.OnClickL
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == IntentConstants.RC_EMAIL) {
-            this.deleteFile("stack.trace");
             gotoMain();
         }
     }
 
     private void gotoMain() {
-        this.startActivity(new Intent(this, LoginActivity.class));
-        this.finish();
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 }

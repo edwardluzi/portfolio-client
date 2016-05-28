@@ -100,6 +100,11 @@ public class PortfolioActivity extends AppCompatActivity implements ViewPager.On
             intent.putExtra(IntentConstants.ARG_PID, mPortfolioId);
             startActivityForResult(intent, IntentConstants.RC_EDIT_PORTFOLIO);
             return true;
+        } else if (id == R.id.action_analysis_portfolio) {
+            Intent intent = new Intent(this, AnalysisPortfolioListActivity.class);
+            intent.putExtra(IntentConstants.ARG_PID, mPortfolioId);
+            startActivity(intent);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -131,7 +136,7 @@ public class PortfolioActivity extends AppCompatActivity implements ViewPager.On
     private void setTitle() {
         Portfolio portfolio = ClientContext.getInstance().getAccount().find(mPortfolioId);
         if (portfolio != null) {
-            this.setTitle(portfolio.getName());
+            setTitle(portfolio.getName());
             mToolbar.setTitle(portfolio.getName());
         }
     }

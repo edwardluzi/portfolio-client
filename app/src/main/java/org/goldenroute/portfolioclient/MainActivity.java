@@ -24,7 +24,6 @@ import org.goldenroute.portfolioclient.rest.RestAsyncTask;
 import org.goldenroute.portfolioclient.rest.RestOperations;
 import org.goldenroute.portfolioclient.utils.TopExceptionHandler;
 
-import java.io.IOException;
 import java.util.Locale;
 
 import butterknife.Bind;
@@ -149,12 +148,13 @@ public class MainActivity extends AppCompatActivity
             try {
                 Call<Account> call = RestOperations.getInstance().getAccountService().getAccount(0L);
                 Response<Account> response = call.execute();
-                mAccount = response.body();
-                if (!response.isSuccessful() || mAccount == null) {
+                if (response.isSuccessful()) {
+                    mAccount = response.body();
+                }
+                if (mAccount == null) {
                     parseError(response);
                 }
-            } catch (IOException e) {
-                Log.e(TAG, e.getMessage());
+            } catch (Exception e) {
                 mAccount = null;
                 parseError(e);
             }
@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity
             if (success && mAccount != null) {
                 refresh(mAccount);
             } else {
-                Toast.makeText(this.getParentActivity(),
+                Toast.makeText(getParentActivity(),
                         String.format(Locale.getDefault(), getString(R.string.message_retrieving_account_failed), getError()),
                         Toast.LENGTH_LONG).show();
             }

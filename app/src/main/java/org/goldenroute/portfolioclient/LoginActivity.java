@@ -2,9 +2,9 @@ package org.goldenroute.portfolioclient;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.view.View;
@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.facebook.FacebookSdk;
 import com.facebook.login.widget.LoginButton;
 
-import org.goldenroute.portfolioclient.rest.RestOperations;
 import org.goldenroute.portfolioclient.signin.SignInListener;
 import org.goldenroute.portfolioclient.signin.SignInManager;
 import org.goldenroute.portfolioclient.signin.social.FacebookSignInManager;
@@ -51,7 +50,7 @@ public class LoginActivity extends AppCompatActivity implements
 
         ButterKnife.bind(this);
 
-        SpannableString content = new SpannableString(this.getString(R.string.label_explore_as_a_guest));
+        SpannableString content = new SpannableString(getString(R.string.label_explore_as_a_guest));
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
         mButtonExplore.setText(content);
 

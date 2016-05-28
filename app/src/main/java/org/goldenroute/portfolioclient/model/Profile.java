@@ -60,13 +60,11 @@ public class Profile {
         this.location = location;
     }
 
-    public String getWechatId()
-    {
+    public String getWechatId() {
         return wechatId;
     }
 
-    public void setWechatId(String wechatId)
-    {
+    public void setWechatId(String wechatId) {
         this.wechatId = wechatId;
     }
 }

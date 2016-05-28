@@ -5,12 +5,16 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import org.goldenroute.portfolioclient.R;
+import org.jsoup.Jsoup;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -37,12 +41,12 @@ public abstract class RestAsyncTask<Params, Progress, Result> extends AsyncTask<
     }
 
     protected RestAsyncTask(Activity activity, boolean showDialog) {
-        this.mParentActivity = activity;
-        this.mError = "";
+        mParentActivity = activity;
+        mError = "";
         if (showDialog) {
-            this.mProgressDialog = new ProgressDialog(activity);
-            this.mProgressDialog.setCancelable(false);
-            this.mProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            mProgressDialog = new ProgressDialog(activity);
+            mProgressDialog.setCancelable(false);
+            mProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialog) {
                     cancel(true);
@@ -55,8 +59,8 @@ public abstract class RestAsyncTask<Params, Progress, Result> extends AsyncTask<
     protected void onPreExecute() {
         super.onPreExecute();
         if (mProgressDialog != null) {
-            this.mProgressDialog.setMessage("Please waiting...");
-            this.mProgressDialog.show();
+            mProgressDialog.setMessage( mParentActivity.getString(R.string.message_please_wait));
+            mProgressDialog.show();
         }
     }
 
@@ -64,20 +68,41 @@ public abstract class RestAsyncTask<Params, Progress, Result> extends AsyncTask<
     @Override
     protected void onPostExecute(Result result) {
         super.onPostExecute(result);
-        if (this.mProgressDialog != null) {
-            this.mProgressDialog.dismiss();
-            this.mProgressDialog = null;
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+            mProgressDialog = null;
         }
     }
 
     protected String parseError(Response<?> response) {
         HashMap<String, String> map = null;
+        String body = null;
         try {
-            map = new Gson().fromJson(response.errorBody().string(),
-                    new TypeToken<HashMap<String, String>>() {
-                    }.getType());
+            body = response.errorBody().string();
         } catch (IOException e) {
             Log.e(TAG, e.getMessage());
+        }
+
+        if (!TextUtils.isEmpty(body)) {
+            try {
+                map = new Gson().fromJson(body,
+                        new TypeToken<HashMap<String, String>>() {
+                        }.getType());
+            } catch (JsonSyntaxException e) {
+                Log.e(TAG, e.getMessage());
+            }
+
+            if (map == null) {
+                try {
+                    Elements elements = Jsoup.parse(body).getElementsByTag("title");
+                    if (elements.size() > 0) {
+                        map = new HashMap<>();
+                        map.put("error_description", elements.get(0).text());
+                    }
+                } catch (Throwable t) {
+                    t.printStackTrace();
+                }
+            }
         }
 
         if (map != null && map.containsKey("error_description")) {
@@ -86,7 +111,7 @@ public abstract class RestAsyncTask<Params, Progress, Result> extends AsyncTask<
             mError = map.get("error");
         } else {
             mError = response.message();
-            if (mError.length() == 0) {
+            if (TextUtils.isEmpty(mError)) {
                 mError = mParentActivity.getString(R.string.message_unknown_error);
             }
         }
@@ -95,7 +120,29 @@ public abstract class RestAsyncTask<Params, Progress, Result> extends AsyncTask<
     }
 
     protected String parseError(Exception e) {
+        Throwable throwable = e.getCause();
+        if (throwable != null) {
+            mError = throwable.getMessage();
+            if (!TextUtils.isEmpty(mError)) {
+                return mError;
+            }
+            mError = throwable.getLocalizedMessage();
+            if (!TextUtils.isEmpty(mError)) {
+                return mError;
+            }
+        }
+
         mError = e.getMessage();
+        if (!TextUtils.isEmpty(mError)) {
+            return mError;
+        }
+
+        mError = e.getLocalizedMessage();
+        if (!TextUtils.isEmpty(mError)) {
+            return mError;
+        }
+
+        mError = e.toString();
         return mError;
     }
 }

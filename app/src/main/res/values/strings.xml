@@ -8,12 +8,12 @@
     <string name="action_save">Save</string>
     <string name="action_delete">Delete</string>
     <string name="action_edit">Edit</string>
+    <string name="action_analysis">Analysis</string>
     <string name="content_description_sailing">Sailing</string>
     <string name="content_description_boating">Boating</string>
     <string name="content_description_wechat_sign_in">Wechat sign in</string>
     <string name="content_description_weibo_sign_in">Weibo sign in</string>
     <string name="content_description_navigation">boating</string>
-    <string name="content_description_logo">log</string>
     <string name="content_description_avatar">Avatar</string>
     <string name="title_activity_about">About this app</string>
     <string name="title_activity_create_portfolio">Create Portfolio</string>
@@ -27,6 +27,7 @@
     <string name="title_portfolio_transactions">Transactions</string>
     <string name="title_delete_portfolio">Delete Portfolio</string>
     <string name="title_delete_transaction">Delete Transaction</string>
+    <string name="title_activity_analysis_portfolio_list">Analysis</string>
     <string name="label_portfolio_list_type">Type:</string>
     <string name="label_portfolio_list_name">Name:</string>
     <string name="label_portfolio_list_asset_class">Primary asset class:</string>
@@ -39,7 +40,7 @@
     <string name="label_profile_user_id">User ID:</string>
     <string name="label_profile_screen_name">Screen name:</string>
     <string name="label_profile_location">Location:</string>
-    <string name="label_coming_soon">Coming soon...</string>
+    <string name="label_coming_soon">Coming soon…</string>
     <string name="label_delete">Delete</string>
     <string name="label_cancel">Cancel</string>
     <string name="label_okay">Okay</string>
@@ -86,6 +87,10 @@
     <string name="label_daily">Daily</string>
     <string name="label_total">Total</string>
     <string name="label_units">Units</string>
+
+    <string name="column_label_ticker">Ticker</string>
+    <string name="column_label_commission">Commn</string>
+
     <string-array name="pref_notification_frequency_titles">
         <item>Daily</item>
         <item>Weekly</item>
@@ -112,10 +117,9 @@
     <string name="message_adding_portfolio_failed">Adding portfolio failed: %1$s</string>
     <string name="message_modifying_portfolio_failed">Modifying portfolio failed: %1$s</string>
     <string name="message_deleting_portfolio_failed">Deleting portfolio failed: %1$s</string>
-
+    <string name="message_retrieving_portfolio_report_failed">Retrieving portfolio report failed: %1$s.</string>
     <string name="message_adding_transaction_succeeded">Adding transaction succeeded.</string>
     <string name="message_modifying_transaction_succeeded">Modifying transaction succeeded.</string>
-    <string name="message_deleting_transaction_succeeded">Deleting transaction succeeded.</string>
     <string name="message_adding_transaction_failed">Adding transaction failed: %1$s</string>
     <string name="message_modifying_transaction_failed">Modifying transaction failed: %1$s.</string>
     <string name="message_deleting_transaction_failed">Deleting transaction failed: %1$s.</string>
@@ -127,8 +131,9 @@
     <string name="message_binding_account_succeeded">Binding account succeeded.</string>
     <string name="message_binding_account_failed">Binding account failed: %1$s.</string>
 
-
     <string name="message_unknown_error">Unknown error.</string>
+    <string name="message_please_wait">Please wait....</string>
+
     <string name="label_logout_and_exit">Logout &amp; Exit</string>
 
     <string name="title_activity_send_logs">Send Logs</string>
@@ -137,7 +142,8 @@
     <string name="content_description_sorry">We are sorry!</string>
     <string name="label_send_log_description"><![CDATA[<br>The application was crashed during last run.<br><br><b>Please tell us about this problem.</b><br><br>We have created an error report that you can send to us. We will treat this report as confidential and anonymous.]]></string>
     <string name="label_bind_to_wechat">Bind to Wechat</string>
-    <string name="label_unbind_to_wechat">Unbind to Wechat</string>
     <string name="prompt_bing_to_wechat">Please type your binding key:</string>
+    <string name="label_portfolio_analysis_efficient_frontier">Efficient Frontier</string>
+    <string name="label_portfolio_analysis_allocation">Allocation</string>
 
 </resources>

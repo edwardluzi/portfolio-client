@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +21,6 @@ import org.goldenroute.portfolioclient.model.Transaction;
 import org.goldenroute.portfolioclient.rest.RestAsyncTask;
 import org.goldenroute.portfolioclient.rest.RestOperations;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -260,18 +258,18 @@ public class CreateTransactionActivity extends AppCompatActivity implements View
                     call = RestOperations.getInstance().getTransactionService().update(mPortfolioId, mTransaction.getId(), mTransaction);
                 }
                 response = call.execute();
-                mReturned = response.body();
-
-                if (response.isSuccessful() && mReturned != null) {
+                if (response.isSuccessful()) {
+                    mReturned = response.body();
+                }
+                if (mReturned != null) {
                     ClientContext.getInstance().getAccount().addOrUpdate(mReturned);
                 } else {
                     parseError(response);
                 }
 
-            } catch (IOException e) {
-                Log.e(TAG, e.getMessage());
-                parseError(e);
+            } catch (Exception e) {
                 mReturned = null;
+                parseError(e);
             }
             return true;
         }
@@ -281,7 +279,7 @@ public class CreateTransactionActivity extends AppCompatActivity implements View
             super.onPostExecute(success);
             mAsyncTask = null;
             if (success && mReturned != null) {
-                Toast.makeText(this.getParentActivity(),
+                Toast.makeText(getParentActivity(),
                         getString(mTransactionId == 0 ?
                                 R.string.message_adding_transaction_succeeded : R.string.message_modifying_transaction_succeeded),
                         Toast.LENGTH_LONG).show();
@@ -289,9 +287,8 @@ public class CreateTransactionActivity extends AppCompatActivity implements View
                 intent.putExtra(IntentConstants.ARG_TID, mTransactionId);
                 setResult(RESULT_OK, intent);
                 finish();
-
             } else {
-                Toast.makeText(this.getParentActivity(),
+                Toast.makeText(getParentActivity(),
                         String.format(Locale.getDefault(),
                                 getString(mTransactionId == 0 ? R.string.message_adding_transaction_failed : R.string.message_modifying_transaction_failed),
                                 getError()),

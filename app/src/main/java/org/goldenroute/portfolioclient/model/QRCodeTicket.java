@@ -1,5 +1,6 @@
 package org.goldenroute.portfolioclient.model;
 
+@SuppressWarnings("InstanceVariableNamingConvention")
 public class QRCodeTicket {
     private String ticket;
 

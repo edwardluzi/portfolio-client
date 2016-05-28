@@ -35,7 +35,7 @@ public class MainMarketFragment extends MainBaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        this.setTitle(getString(R.string.label_nav_market));
+        setTitle(getString(R.string.label_nav_market));
     }
 
     @Override

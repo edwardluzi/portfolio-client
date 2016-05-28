@@ -34,7 +34,7 @@ public class MainListsFragment extends MainBaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        this.setTitle(getString(R.string.label_nav_lists));
+        setTitle(getString(R.string.label_nav_lists));
     }
 
     @Override

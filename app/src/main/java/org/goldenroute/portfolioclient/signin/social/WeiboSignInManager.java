@@ -19,7 +19,6 @@ public class WeiboSignInManager extends SignInManager {
     public static final String PROVIDER = "Weibo";
 
     private Activity mActivity;
-    private AuthInfo mAuthInfo;
     private Oauth2AccessToken mAccessToken;
     private OAuth2Token mOAuth2Token;
     private SsoHandler mSsoHandler;
@@ -34,8 +33,8 @@ public class WeiboSignInManager extends SignInManager {
     }
 
     public void SignIn() {
-        mAuthInfo = new AuthInfo(mActivity, Constants.APP_KEY, Constants.REDIRECT_URL, Constants.SCOPE);
-        mSsoHandler = new SsoHandler(mActivity, mAuthInfo);
+        AuthInfo authInfo = new AuthInfo(mActivity, Constants.APP_KEY, Constants.REDIRECT_URL, Constants.SCOPE);
+        mSsoHandler = new SsoHandler(mActivity, authInfo);
         mSsoHandler.authorize(new WeiboAuthListenerImpl());
     }
 

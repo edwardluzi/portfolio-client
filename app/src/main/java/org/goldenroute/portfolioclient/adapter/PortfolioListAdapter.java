@@ -23,8 +23,8 @@ public class PortfolioListAdapter extends ToggleAdapter {
 
     public PortfolioListAdapter(Activity activity, List<Portfolio> portfolios) {
         super();
-        this.mActivity = activity;
-        this.mPortfolios = portfolios;
+        mActivity = activity;
+        mPortfolios = portfolios;
     }
 
     public List<Portfolio> getData() {
@@ -105,14 +105,14 @@ public class PortfolioListAdapter extends ToggleAdapter {
         private TextView mTextViewTotalChangePercentage;
 
         public ViewHolder(TextView textViewName, TextView textViewWeight, TextView textViewValue, TextView textViewCost, TextView textViewDailyChange, TextView textViewDailyChangePercentage, TextView textViewTotalChange, TextView textViewTotalChangePercentage) {
-            this.mTextViewName = textViewName;
-            this.mTextViewWeight = textViewWeight;
-            this.mTextViewValue = textViewValue;
-            this.mTextViewCost = textViewCost;
-            this.mTextViewDailyChange = textViewDailyChange;
-            this.mTextViewDailyChangePercentage = textViewDailyChangePercentage;
-            this.mTextViewTotalChange = textViewTotalChange;
-            this.mTextViewTotalChangePercentage = textViewTotalChangePercentage;
+            mTextViewName = textViewName;
+            mTextViewWeight = textViewWeight;
+            mTextViewValue = textViewValue;
+            mTextViewCost = textViewCost;
+            mTextViewDailyChange = textViewDailyChange;
+            mTextViewDailyChangePercentage = textViewDailyChangePercentage;
+            mTextViewTotalChange = textViewTotalChange;
+            mTextViewTotalChangePercentage = textViewTotalChangePercentage;
         }
 
         public TextView getTextViewName() {

@@ -1,8 +1,5 @@
 package org.goldenroute.portfolioclient;
 
-import android.app.Application;
-import android.content.Intent;
-
 import org.goldenroute.portfolioclient.model.Account;
 import org.goldenroute.portfolioclient.signin.SignInManager;
 
@@ -24,14 +21,14 @@ public class ClientContext {
     }
 
     public void setSignInManager(SignInManager signInManager) {
-        this.mSignInManager = signInManager;
+        mSignInManager = signInManager;
     }
 
     public Account getAccount() {
         return mAccount;
     }
 
-    public void setAccount(Account mAccount) {
-        this.mAccount = mAccount;
+    public void setAccount(Account account) {
+        mAccount = account;
     }
 }

@@ -19,8 +19,8 @@ public class TopExceptionHandler implements Thread.UncaughtExceptionHandler {
     private Thread.UncaughtExceptionHandler mDefaultHandler;
 
     public TopExceptionHandler(Activity activity) {
-        this.mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
-        this.mActivity = activity;
+        mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
+        mActivity = activity;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class TopExceptionHandler implements Thread.UncaughtExceptionHandler {
             ioe.printStackTrace();
         }
 
-        this.mDefaultHandler.uncaughtException(thread, ex);
+        mDefaultHandler.uncaughtException(thread, ex);
     }
 
     private StringBuilder collectStackTrace(Throwable ex, StringBuilder report) {
@@ -52,7 +52,7 @@ public class TopExceptionHandler implements Thread.UncaughtExceptionHandler {
         report.append(IntentConstants.NEW_LINE);
 
         StackTraceElement[] elements = ex.getStackTrace();
-        for (StackTraceElement element:elements) {
+        for (StackTraceElement element : elements) {
             report.append("    ");
             report.append(element.toString());
             report.append(IntentConstants.NEW_LINE);
@@ -67,7 +67,7 @@ public class TopExceptionHandler implements Thread.UncaughtExceptionHandler {
             report.append(cause.toString());
             report.append(IntentConstants.NEW_LINE);
             elements = cause.getStackTrace();
-            for (StackTraceElement element:elements) {
+            for (StackTraceElement element : elements) {
                 report.append("    ");
                 report.append(element.toString());
                 report.append(IntentConstants.NEW_LINE);
@@ -96,18 +96,19 @@ public class TopExceptionHandler implements Thread.UncaughtExceptionHandler {
     }
 
     private void collectPackageInfo(StringBuilder report) {
-        PackageInfo packageInfo = null;
+        PackageInfo packageInfo;
         try {
-            packageInfo = this.mActivity.getPackageManager().getPackageInfo(this.mActivity.getPackageName(), 0);
+            packageInfo = mActivity.getPackageManager().getPackageInfo(mActivity.getPackageName(), 0);
             report.append("App version:    ");
             report.append(packageInfo.versionName);
             report.append(IntentConstants.NEW_LINE);
         } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
     private void collectLogs(StringBuilder report) {
-        Process process = null;
+        Process process;
         try {
             process = Runtime.getRuntime().exec("logcat -d -v time");
 
@@ -124,7 +125,7 @@ public class TopExceptionHandler implements Thread.UncaughtExceptionHandler {
 
     private void clearLogs() {
         try {
-            Process process = Runtime.getRuntime().exec("logcat -c");
+           Runtime.getRuntime().exec("logcat -c");
         } catch (IOException e) {
             e.printStackTrace();
         }

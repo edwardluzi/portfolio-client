@@ -8,7 +8,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -80,7 +79,7 @@ public class PortfolioTransactionFragment extends RefreshableFragment implements
         View fragment = inflater.inflate(R.layout.fragment_portfolio_transaction, container, false);
         ButterKnife.bind(this, fragment);
 
-        mTransactionListAdapter = new TransactionListAdapter(this.getActivity(), new ArrayList<Transaction>());
+        mTransactionListAdapter = new TransactionListAdapter(getActivity(), new ArrayList<Transaction>());
         mListViewTransactions.setAdapter(mTransactionListAdapter);
         mListViewTransactions.setOnItemClickListener(this);
 
@@ -213,24 +212,25 @@ public class PortfolioTransactionFragment extends RefreshableFragment implements
 
         public DeletingTransactionTask(Activity activity, Set<Long> tids) {
             super(activity, true);
-            this.mTransactionIds = tids;
+            mTransactionIds = tids;
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
             try {
-                Call<Portfolio> call = RestOperations.getInstance().getTransactionService().delete(mPortfolioId, TextUtils.join(",", this.mTransactionIds));
+                Call<Portfolio> call = RestOperations.getInstance().getTransactionService().delete(mPortfolioId, TextUtils.join(",", mTransactionIds));
                 Response<Portfolio> response = call.execute();
-                mReturned = response.body();
-                if (response.isSuccessful() && mReturned != null) {
+                if (response.isSuccessful()) {
+                    mReturned = response.body();
+                }
+                if (mReturned != null) {
                     ClientContext.getInstance().getAccount().addOrUpdate(mReturned);
                 } else {
                     parseError(response);
                 }
             } catch (IOException e) {
-                Log.e(TAG, e.getMessage());
-                parseError(e);
                 mReturned = null;
+                parseError(e);
             }
             return true;
         }
@@ -243,7 +243,7 @@ public class PortfolioTransactionFragment extends RefreshableFragment implements
             if (success && mReturned != null) {
                 refresh();
             } else {
-                Toast.makeText(this.getParentActivity(),
+                Toast.makeText(getParentActivity(),
                         String.format(Locale.getDefault(),
                                 getString(R.string.message_deleting_transaction_failed),
                                 getError()),

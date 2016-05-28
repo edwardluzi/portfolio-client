@@ -9,10 +9,10 @@ public abstract class ToggleAdapter extends BaseAdapter {
     private Set<Long> mSelectedItemsIds = new HashSet<>();
 
     public void toggleSelection(Long id) {
-        if (this.mSelectedItemsIds.contains(id)) {
-            this.mSelectedItemsIds.remove(id);
+        if (mSelectedItemsIds.contains(id)) {
+            mSelectedItemsIds.remove(id);
         } else {
-            this.mSelectedItemsIds.add(id);
+            mSelectedItemsIds.add(id);
         }
     }
 

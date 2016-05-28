@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -19,7 +18,6 @@ import org.goldenroute.portfolioclient.model.Portfolio;
 import org.goldenroute.portfolioclient.rest.RestAsyncTask;
 import org.goldenroute.portfolioclient.rest.RestOperations;
 
-import java.io.IOException;
 import java.util.Locale;
 
 import butterknife.Bind;
@@ -152,25 +150,23 @@ public class CreatePortfolioListActivity extends AppCompatActivity {
             try {
                 Call<Portfolio> call;
                 Response<Portfolio> response;
-
                 if (mPortfolioId == 0) {
                     call = RestOperations.getInstance().getPortfolioService().create(mPortfolio);
-
                 } else {
                     call = RestOperations.getInstance().getPortfolioService().update(mPortfolio.getId(), mPortfolio);
-
                 }
                 response = call.execute();
-                mReturned = response.body();
-                if (response.isSuccessful() && mReturned != null) {
+                if (response.isSuccessful()) {
+                    mReturned = response.body();
+                }
+                if (mReturned != null) {
                     ClientContext.getInstance().getAccount().addOrUpdate(mReturned);
                 } else {
                     parseError(response);
                 }
-            } catch (IOException e) {
-                Log.e(TAG, e.getMessage());
-                parseError(e);
+            } catch (Exception e) {
                 mReturned = null;
+                parseError(e);
             }
             return true;
         }
@@ -182,7 +178,7 @@ public class CreatePortfolioListActivity extends AppCompatActivity {
             mCreatePortfolioTask = null;
 
             if (success && mReturned != null) {
-                Toast.makeText(this.getParentActivity(),
+                Toast.makeText(getParentActivity(),
                         getString(mPortfolioId == 0 ? R.string.message_adding_portfolio_succeeded : R.string.message_modifying_portfolio_succeeded), Toast.LENGTH_LONG).show();
                 Intent intent = new Intent();
                 intent.putExtra(IntentConstants.ARG_PID, mReturned.getId());
@@ -190,7 +186,7 @@ public class CreatePortfolioListActivity extends AppCompatActivity {
                 finish();
 
             } else {
-                Toast.makeText(this.getParentActivity(),
+                Toast.makeText(getParentActivity(),
                         String.format(Locale.getDefault(),
                                 getString(mPortfolioId == 0 ? R.string.message_adding_portfolio_failed : R.string.message_modifying_portfolio_failed),
                                 getError()),

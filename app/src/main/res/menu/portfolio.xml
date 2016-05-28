@@ -11,4 +11,10 @@
         android:icon="@android:drawable/ic_menu_edit"
         android:title="@string/action_edit"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_analysis_portfolio"
+        android:icon="@android:drawable/ic_menu_report_image"
+        android:title="@string/action_analysis"
+        app:showAsAction="ifRoom" />
 </menu>

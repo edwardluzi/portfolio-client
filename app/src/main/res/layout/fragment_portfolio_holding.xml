@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="layout.PortfolioHoldingFragment">
+    tools:context="org.goldenroute.portfolioclient.fragment.PortfolioHoldingFragment">
 
 
     <LinearLayout
@@ -17,7 +17,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/label_ticker" />
+            android:text="@string/column_label_ticker" />
 
         <TextView
             android:layout_width="0dp"

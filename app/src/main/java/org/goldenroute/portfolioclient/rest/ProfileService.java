@@ -1,7 +1,5 @@
 package org.goldenroute.portfolioclient.rest;
 
-import org.goldenroute.portfolioclient.model.QRCodeTicket;
-
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;

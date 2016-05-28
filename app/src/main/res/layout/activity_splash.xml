@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="org.goldenroute.exam.SplashActivity">
+    tools:context="org.goldenroute.portfolioclient.SplashActivity">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/sailing"
+        android:background="@drawable/bk_sailing_normal"
         android:contentDescription="@string/content_description_sailing"
         android:scaleType="fitCenter" />
 

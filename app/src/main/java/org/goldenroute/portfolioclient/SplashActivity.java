@@ -27,18 +27,15 @@ public class SplashActivity extends AppCompatActivity {
 
     private void gotoMain() {
         if (fileExists("stack.trace")) {
-            this.startActivity(new Intent(this, SendLogsActivity.class));
+            startActivity(new Intent(this, SendLogsActivity.class));
         } else {
-            this.startActivity(new Intent(this, LoginActivity.class));
+            startActivity(new Intent(this, LoginActivity.class));
         }
-        this.finish();
+        finish();
     }
 
     public boolean fileExists(String filename) {
-        File file = this.getFileStreamPath(filename);
-        if (file == null || !file.exists()) {
-            return false;
-        }
-        return true;
+        File file = getFileStreamPath(filename);
+        return !(file == null || !file.exists());
     }
 }

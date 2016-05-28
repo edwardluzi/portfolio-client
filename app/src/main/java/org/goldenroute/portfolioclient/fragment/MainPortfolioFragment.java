@@ -9,7 +9,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,7 +21,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-
 import org.goldenroute.portfolioclient.ClientContext;
 import org.goldenroute.portfolioclient.CreatePortfolioListActivity;
 import org.goldenroute.portfolioclient.IntentConstants;
@@ -34,7 +32,6 @@ import org.goldenroute.portfolioclient.model.Portfolio;
 import org.goldenroute.portfolioclient.rest.RestAsyncTask;
 import org.goldenroute.portfolioclient.rest.RestOperations;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -69,7 +66,7 @@ public class MainPortfolioFragment extends MainBaseFragment implements ListView.
         View fragment = inflater.inflate(R.layout.fragment_main_portfolio, container, false);
         ButterKnife.bind(this, fragment);
 
-        mPortfolioListAdapter = new PortfolioListAdapter(this.getActivity(), new ArrayList<Portfolio>());
+        mPortfolioListAdapter = new PortfolioListAdapter(getActivity(), new ArrayList<Portfolio>());
         mListViewPortfolios.setAdapter(mPortfolioListAdapter);
         mListViewPortfolios.setOnItemClickListener(this);
 
@@ -79,7 +76,7 @@ public class MainPortfolioFragment extends MainBaseFragment implements ListView.
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
-        this.setTitle(getString(R.string.label_nav_portfolios));
+        setTitle(getString(R.string.label_nav_portfolios));
 
         mListViewPortfolios.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
 
@@ -149,7 +146,7 @@ public class MainPortfolioFragment extends MainBaseFragment implements ListView.
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.main_portfolios, menu);
+        inflater.inflate(R.menu.portfolios, menu);
         inflater.inflate(R.menu.main, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -225,7 +222,7 @@ public class MainPortfolioFragment extends MainBaseFragment implements ListView.
                 if (portfolioId != 0) {
                     Intent intent = new Intent(getActivity(), PortfolioActivity.class);
                     intent.putExtra(IntentConstants.ARG_PID, portfolioId);
-                    this.startActivityForResult(intent, IntentConstants.RC_EDIT_PORTFOLIO);
+                    startActivityForResult(intent, IntentConstants.RC_EDIT_PORTFOLIO);
                 }
             }
         } else if (requestCode == IntentConstants.RC_EDIT_PORTFOLIO) {
@@ -253,24 +250,25 @@ public class MainPortfolioFragment extends MainBaseFragment implements ListView.
 
         public DeletingPortfolioTask(Activity activity, Set<Long> pids) {
             super(activity, true);
-            this.mPortfolioIds = pids;
-            this.mResult = false;
+            mPortfolioIds = pids;
+            mResult = false;
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
             try {
-                Call<Boolean> call = RestOperations.getInstance().getPortfolioService().delete(TextUtils.join(",", this.mPortfolioIds));
+                Call<Boolean> call = RestOperations.getInstance().getPortfolioService().delete(TextUtils.join(",", mPortfolioIds));
                 Response<Boolean> response = call.execute();
-                mResult = response.body();
-                if (!response.isSuccessful() || mResult == null || !mResult) {
+                if (response.isSuccessful()) {
+                    mResult = response.body();
+                }
+                if (mResult == null || !mResult) {
                     parseError(response);
                     mResult = false;
                 }
-            } catch (IOException e) {
-                Log.e(TAG, e.getMessage());
-                parseError(e);
+            } catch (Exception e) {
                 mResult = false;
+                parseError(e);
             }
             return true;
         }
@@ -280,12 +278,12 @@ public class MainPortfolioFragment extends MainBaseFragment implements ListView.
             super.onPostExecute(success);
             mPortfolioListAdapter.removeSelection();
 
-            if (success && this.mResult) {
-                Toast.makeText(this.getParentActivity(), getString(R.string.message_deleting_portfolio_succeeded), Toast.LENGTH_LONG).show();
-                ClientContext.getInstance().getAccount().remove(this.mPortfolioIds);
+            if (success && mResult) {
+                Toast.makeText(getParentActivity(), getString(R.string.message_deleting_portfolio_succeeded), Toast.LENGTH_LONG).show();
+                ClientContext.getInstance().getAccount().remove(mPortfolioIds);
                 refresh();
             } else {
-                Toast.makeText(this.getParentActivity(),
+                Toast.makeText(getParentActivity(),
                         String.format(Locale.getDefault(), getString(R.string.message_deleting_portfolio_failed), getError()),
                         Toast.LENGTH_LONG).show();
             }

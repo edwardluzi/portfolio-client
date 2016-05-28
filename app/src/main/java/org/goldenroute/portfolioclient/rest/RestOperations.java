@@ -2,7 +2,6 @@ package org.goldenroute.portfolioclient.rest;
 
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
@@ -47,7 +46,6 @@ public class RestOperations {
         mInstance.create(activity);
     }
 
-    private Retrofit mRetrofit;
     private AccountService mAccountService;
     private PortfolioService mPortfolioService;
     private QRCodeService mQRCodeService;
@@ -94,29 +92,29 @@ public class RestOperations {
                 })
                 .create();
 
-        mRetrofit = new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .build();
 
-        mAccountService = mRetrofit.create(AccountService.class);
-        mPortfolioService = mRetrofit.create(PortfolioService.class);
-        mTransactionService = mRetrofit.create(TransactionService.class);
-        mQRCodeService = mRetrofit.create(QRCodeService.class);
-        mProfileService = mRetrofit.create(ProfileService.class);
+        mAccountService = retrofit.create(AccountService.class);
+        mPortfolioService = retrofit.create(PortfolioService.class);
+        mTransactionService = retrofit.create(TransactionService.class);
+        mQRCodeService = retrofit.create(QRCodeService.class);
+        mProfileService = retrofit.create(ProfileService.class);
     }
 
     public AccountService getAccountService() {
-        return this.mAccountService;
+        return mAccountService;
     }
 
     public PortfolioService getPortfolioService() {
-        return this.mPortfolioService;
+        return mPortfolioService;
     }
 
     public TransactionService getTransactionService() {
-        return this.mTransactionService;
+        return mTransactionService;
     }
 
     public QRCodeService getQRCodeService() {

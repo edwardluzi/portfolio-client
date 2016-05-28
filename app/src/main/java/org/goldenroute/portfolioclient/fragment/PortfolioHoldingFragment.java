@@ -56,7 +56,7 @@ public class PortfolioHoldingFragment extends RefreshableFragment {
         View fragment = inflater.inflate(R.layout.fragment_portfolio_holding, container, false);
         ButterKnife.bind(this, fragment);
 
-        mHoldingListAdapter = new HoldingListAdapter(this.getActivity(), new ArrayList<Holding>());
+        mHoldingListAdapter = new HoldingListAdapter(getActivity(), new ArrayList<Holding>());
         mListViewHoldings.setAdapter(mHoldingListAdapter);
 
         return fragment;
