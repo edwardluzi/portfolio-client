@@ -11,15 +11,20 @@ public class PortfolioReport {
     private MarkowitzPortfolio overall;
     private Map<String, MarkowitzPortfolio> individuals;
     private EfficientFrontier efficientFrontier;
+    private double riskfree;
+    private MarkowitzPortfolio tangency;
 
     public PortfolioReport(Long portfolioId, String portfolioName, List<String> symbols, MarkowitzPortfolio overall,
-                           Map<String, MarkowitzPortfolio> individuals, EfficientFrontier efficientFrontier) {
+                           Map<String, MarkowitzPortfolio> individuals, EfficientFrontier efficientFrontier, double riskfree,
+                           MarkowitzPortfolio tangency) {
         this.portfolioId = portfolioId;
         this.portfolioName = portfolioName;
         this.symbols = symbols;
         this.overall = overall;
         this.individuals = individuals;
         this.efficientFrontier = efficientFrontier;
+        this.riskfree = riskfree;
+        this.tangency = tangency;
     }
 
     public Long getPortfolioId() {
@@ -44,5 +49,13 @@ public class PortfolioReport {
 
     public EfficientFrontier getEfficientFrontier() {
         return efficientFrontier;
+    }
+
+    public double getRiskfree() {
+        return riskfree;
+    }
+
+    public MarkowitzPortfolio getTangency() {
+        return tangency;
     }
 }

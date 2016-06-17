@@ -3,6 +3,7 @@ package org.goldenroute.portfolioclient.rest;
 
 import org.goldenroute.portfolioclient.model.Portfolio;
 import org.goldenroute.portfolioclient.model.PortfolioReport;
+import org.goldenroute.portfolioclient.model.PortfolioReportParameters;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -22,6 +23,6 @@ public interface PortfolioService {
     @DELETE("portfolios/{pids}")
     Call<Boolean> delete(@Path("pids") String pids);
 
-    @GET("portfolios/{pid}/analysis")
-    Call<PortfolioReport> analysis(@Path("pid") Long pid);
+    @POST("portfolios/{pid}/analysis")
+    Call<PortfolioReport> analysis(@Path("pid") Long pid, @Body PortfolioReportParameters parameters);
 }

@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.goldenroute.portfolioclient.model.MarkowitzPortfolio;
 import org.goldenroute.portfolioclient.model.PortfolioReport;
+import org.goldenroute.portfolioclient.model.PortfolioReportParameters;
 import org.goldenroute.portfolioclient.rest.RestAsyncTask;
 import org.goldenroute.portfolioclient.rest.RestOperations;
 
@@ -85,8 +87,8 @@ public class AnalysisPortfolioListActivity extends AppCompatActivity {
 
         Axis axisX = new Axis().setHasLines(true);
         Axis axisY = new Axis().setHasLines(true);
-            axisX.setName("Risk Level (Standard Deviation) x1");
-            axisY.setName("Return Level x1");
+        axisX.setName("Risk Level (Standard Deviation) %");
+        axisY.setName("Return Level %");
 
         lineChartData.setAxisXBottom(axisX);
         lineChartData.setAxisYLeft(axisY);
@@ -116,7 +118,7 @@ public class AnalysisPortfolioListActivity extends AppCompatActivity {
     }
 
     private Viewport calculateViewPort(PortfolioReport report) {
-        float left = Float.MAX_VALUE;
+        float left = 0;
         float right = Float.MIN_VALUE;
         float top = Float.MIN_VALUE;
         float bottom = Float.MAX_VALUE;
@@ -125,10 +127,11 @@ public class AnalysisPortfolioListActivity extends AppCompatActivity {
         list.addAll(report.getEfficientFrontier().getFrontiers());
         list.addAll(report.getIndividuals().values());
         list.add(report.getOverall());
+        list.add(report.getTangency());
 
         for (MarkowitzPortfolio portfolio : list) {
-            float var = (float) portfolio.getVariance();
-            float ret = (float) portfolio.getExpectedReturn();
+            float var = (float) portfolio.getStandardDeviationPercentage();
+            float ret = (float) portfolio.getExpectedReturnPercentage();
 
             if (var < left) {
                 left = var;
@@ -199,6 +202,7 @@ public class AnalysisPortfolioListActivity extends AppCompatActivity {
         List<Line> lines = new ArrayList<>();
         lines.add(loadEfficientFrontierLine(report, scaleX, scaleY));
         lines.add(loadIndividualLine(report, scaleX, scaleY));
+        lines.add(loadTangencyLine(report, scaleX, scaleY));
 
         LineChartData lineChartData = new LineChartData(lines);
 
@@ -206,15 +210,15 @@ public class AnalysisPortfolioListActivity extends AppCompatActivity {
         Axis axisY = new Axis().setHasLines(true);
 
         if (scaleX == 1) {
-            axisX.setName("Risk Level (Standard Deviation) x1");
+            axisX.setName("Risk Level (Standard Deviation) %");
         } else {
-            axisX.setName(String.format("Risk Level (Standard Deviation) x%." + Integer.toString((int) Math.log10(scaleX)) + "f", 1.0 / (float) scaleX));
+            axisX.setName(String.format("Risk Level (Standard Deviation) %% x%." + Integer.toString((int) Math.log10(scaleX)) + "f", 1.0 / (float) scaleX));
         }
 
         if (scaleY == 1) {
-            axisY.setName("Return Level x1");
+            axisY.setName("Return Level %");
         } else {
-            axisY.setName(String.format("Return Level x%." + Integer.toString((int) Math.log10(scaleY)) + "f", 1.0 / (float) scaleY));
+            axisY.setName(String.format("Return Level %% x%." + Integer.toString((int) Math.log10(scaleY)) + "f", 1.0 / (float) scaleY));
         }
 
         lineChartData.setAxisXBottom(axisX);
@@ -238,11 +242,16 @@ public class AnalysisPortfolioListActivity extends AppCompatActivity {
         List<PointValue> values = new ArrayList<>();
 
         for (MarkowitzPortfolio portfolio : report.getEfficientFrontier().getFrontiers()) {
-            float var = (float) portfolio.getVariance() * scaleX;
-            float ret = (float) portfolio.getExpectedReturn() * scaleY;
-            String label = String.format("%.3f, %.3f", ret, var);
-            values.add(new PointValue(var, ret).setLabel(label));
+            float sd = (float) portfolio.getStandardDeviationPercentage() * scaleX;
+            float ret = (float) portfolio.getExpectedReturnPercentage() * scaleY;
+            String label = String.format("%.3f, %.3f", ret, sd);
+            values.add(new PointValue(sd, ret).setLabel(label));
             mDetails.put(label, portfolio);
+        }
+
+        Log.d(TAG, "loadEfficientFrontierLine");
+        for (PointValue p : values) {
+            Log.d(TAG, p.toString());
         }
 
         Line line = new Line(values);
@@ -262,21 +271,26 @@ public class AnalysisPortfolioListActivity extends AppCompatActivity {
         List<PointValue> values = new ArrayList<>();
 
         for (Map.Entry<String, MarkowitzPortfolio> portfolio : report.getIndividuals().entrySet()) {
-            float var = (float) portfolio.getValue().getVariance() * scaleX;
-            float ret = (float) portfolio.getValue().getExpectedReturn() * scaleY;
-            values.add(new PointValue(var, ret).setLabel(portfolio.getKey()));
+            float sd = (float) portfolio.getValue().getStandardDeviationPercentage() * scaleX;
+            float ret = (float) portfolio.getValue().getExpectedReturnPercentage() * scaleY;
+            values.add(new PointValue(sd, ret).setLabel(portfolio.getKey()));
             mDetails.put(portfolio.getKey(), portfolio.getValue());
         }
 
-        float var = (float) report.getOverall().getVariance() * scaleX;
-        float ret = (float) report.getOverall().getExpectedReturn() * scaleY;
-        values.add(new PointValue(var, ret).setLabel("#CUR"));
+        float sd = (float) report.getOverall().getStandardDeviationPercentage() * scaleX;
+        float ret = (float) report.getOverall().getExpectedReturnPercentage() * scaleY;
+        values.add(new PointValue(sd, ret).setLabel("#CUR"));
         mDetails.put("#CUR", report.getOverall());
 
-        var = (float) report.getEfficientFrontier().getGlobalMinimumVariance().getVariance() * scaleX;
-        ret = (float) report.getEfficientFrontier().getGlobalMinimumVariance().getExpectedReturn() * scaleY;
-        values.add(new PointValue(var, ret).setLabel("#GMV"));
+        sd = (float) report.getEfficientFrontier().getGlobalMinimumVariance().getStandardDeviationPercentage() * scaleX;
+        ret = (float) report.getEfficientFrontier().getGlobalMinimumVariance().getExpectedReturnPercentage() * scaleY;
+        values.add(new PointValue(sd, ret).setLabel("#GMV"));
         mDetails.put("#GMV", report.getEfficientFrontier().getGlobalMinimumVariance());
+
+        Log.d(TAG, "loadIndividualLine");
+        for (PointValue p : values) {
+            Log.d(TAG, p.toString());
+        }
 
         Line line = new Line(values);
         line.setColor(ChartUtils.COLORS[1]);
@@ -291,6 +305,38 @@ public class AnalysisPortfolioListActivity extends AppCompatActivity {
         return line;
     }
 
+    private Line loadTangencyLine(PortfolioReport report, int scaleX, int scaleY) {
+        List<PointValue> values = new ArrayList<>();
+
+        values.add(new PointValue(0, (float) report.getRiskfree() * 100 * scaleY).setLabel("RF"));
+
+        float sd = (float) report.getTangency().getStandardDeviationPercentage() * scaleX;
+        float ret = (float) report.getTangency().getExpectedReturnPercentage() * scaleY;
+        values.add(new PointValue(sd, ret).setLabel("#TAN"));
+        mDetails.put("#TAN", report.getTangency());
+
+        float change = ret - values.get(0).getY();
+        for (int i = 2; i < 5; i++) {
+            values.add(new PointValue(sd * i, values.get(0).getY() + change * i));
+        }
+
+        Log.d(TAG, "loadTangencyLine");
+        for (PointValue p : values) {
+            Log.d(TAG, p.toString());
+        }
+
+        Line line = new Line(values);
+        line.setColor(ChartUtils.COLORS[2]);
+        line.setShape(ValueShape.SQUARE);
+        line.setCubic(false);
+        line.setFilled(false);
+        line.setHasLabels(true);
+        line.setHasLabelsOnlyForSelected(false);
+        line.setHasLines(true);
+        line.setHasPoints(false);
+
+        return line;
+    }
 
     private PieChartData loadPieChartData(PortfolioReport report, MarkowitzPortfolio portfolio) {
         List<SliceValue> values = new ArrayList<SliceValue>();
@@ -349,14 +395,17 @@ public class AnalysisPortfolioListActivity extends AppCompatActivity {
     private class LineChartValueSelectListener implements LineChartOnValueSelectListener {
         @Override
         public void onValueSelected(int lineIndex, int pointIndex, PointValue value) {
-            String label = new String(value.getLabelAsChars());
-            if (mDetails.containsKey(label)) {
-                final PieChartData selectedPieChartData = loadPieChartData(mReport, mDetails.get(label));
-                mPieChartSelected.post(new Runnable() {
-                    public void run() {
-                        mPieChartSelected.setPieChartData(selectedPieChartData);
-                    }
-                });
+            char[] labelArray = value.getLabelAsChars();
+            if (labelArray != null && labelArray.length > 0) {
+                String label = new String(value.getLabelAsChars());
+                if (mDetails.containsKey(label)) {
+                    final PieChartData selectedPieChartData = loadPieChartData(mReport, mDetails.get(label));
+                    mPieChartSelected.post(new Runnable() {
+                        public void run() {
+                            mPieChartSelected.setPieChartData(selectedPieChartData);
+                        }
+                    });
+                }
             }
         }
 
@@ -388,7 +437,8 @@ public class AnalysisPortfolioListActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Void... params) {
             try {
-                Call<PortfolioReport> call = RestOperations.getInstance().getPortfolioService().analysis(mPortfolioId);
+                PortfolioReportParameters parameters = new PortfolioReportParameters(0.0015, 2, false, "M");
+                Call<PortfolioReport> call = RestOperations.getInstance().getPortfolioService().analysis(mPortfolioId, parameters);
                 Response<PortfolioReport> response = call.execute();
                 if (response.isSuccessful()) {
                     mReport = response.body();
