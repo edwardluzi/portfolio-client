@@ -32,6 +32,7 @@ import org.goldenroute.portfolioclient.model.Portfolio;
 import org.goldenroute.portfolioclient.rest.RestAsyncTask;
 import org.goldenroute.portfolioclient.rest.RestOperations;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -48,7 +49,11 @@ public class MainPortfolioFragment extends MainBaseFragment implements ListView.
     @Bind(R.id.list_view_portfolios)
     protected ListView mListViewPortfolios;
 
+    @Bind(R.id.list_view_portfolio_total)
+    protected ListView mListViewTotal;
+
     private PortfolioListAdapter mPortfolioListAdapter;
+    private PortfolioListAdapter mTotalListAdapter;
 
     public MainPortfolioFragment() {
     }
@@ -69,6 +74,9 @@ public class MainPortfolioFragment extends MainBaseFragment implements ListView.
         mPortfolioListAdapter = new PortfolioListAdapter(getActivity(), new ArrayList<Portfolio>());
         mListViewPortfolios.setAdapter(mPortfolioListAdapter);
         mListViewPortfolios.setOnItemClickListener(this);
+
+        mTotalListAdapter = new PortfolioListAdapter(getActivity(), new ArrayList<Portfolio>());
+        mListViewTotal.setAdapter(mTotalListAdapter);
 
         return fragment;
     }
@@ -203,10 +211,49 @@ public class MainPortfolioFragment extends MainBaseFragment implements ListView.
                     List<Portfolio> portfolios = account.getPortfolios();
                     mPortfolioListAdapter.getData().clear();
 
-                    if (portfolios != null)
+                    if (portfolios != null) {
                         mPortfolioListAdapter.getData().addAll(portfolios);
+                    }
+
+                    double value = 0;
+                    double cost = 0;
+                    double dailyChange = 0;
+                    double totalChange = 0;
+
+                    double dailyChangePercentage = 0;
+                    double totalChangePercentage = 0;
+
+                    if(portfolios != null) {
+                        for (Portfolio p : portfolios) {
+                            value += p.getValue() != null ? p.getValue().doubleValue() : 0;
+                            cost += p.getCost() != null ? p.getCost().doubleValue() : 0;
+                            dailyChange += p.getDailyChange() != null ? p.getDailyChange().doubleValue() : 0;
+                            totalChange += p.getTotalChange() != null ? p.getTotalChange().doubleValue() : 0;
+                        }
+                    }
+
+                    if (cost > 0.001) {
+                        totalChangePercentage = totalChange / cost;
+                        dailyChangePercentage = dailyChange / (value - dailyChange);
+                    }
+
+                    List<Portfolio> totals = new ArrayList<>();
+                    Portfolio total = new Portfolio(0L);
+                    total.setName("Total");
+                    total.setCost(BigDecimal.valueOf(cost));
+                    total.setValue(BigDecimal.valueOf(value));
+                    total.setDailyChange(BigDecimal.valueOf(dailyChange));
+                    total.setTotalChange(BigDecimal.valueOf(totalChange));
+                    total.setDailyChangePercentage(BigDecimal.valueOf(dailyChangePercentage));
+                    total.setTotalChangePercentage(BigDecimal.valueOf(totalChangePercentage));
+
+                    totals.add(total);
+
+                    mTotalListAdapter.getData().clear();
+                    mTotalListAdapter.getData().addAll(totals);
                 }
                 mPortfolioListAdapter.notifyDataSetChanged();
+                mTotalListAdapter.notifyDataSetChanged();
             }
         });
     }
@@ -279,11 +326,11 @@ public class MainPortfolioFragment extends MainBaseFragment implements ListView.
             mPortfolioListAdapter.removeSelection();
 
             if (success && mResult) {
-                Toast.makeText(getParentActivity(), getString(R.string.message_deleting_portfolio_succeeded), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), getString(R.string.message_deleting_portfolio_succeeded), Toast.LENGTH_LONG).show();
                 ClientContext.getInstance().getAccount().remove(mPortfolioIds);
                 refresh();
             } else {
-                Toast.makeText(getParentActivity(),
+                Toast.makeText(getContext(),
                         String.format(Locale.getDefault(), getString(R.string.message_deleting_portfolio_failed), getError()),
                         Toast.LENGTH_LONG).show();
             }

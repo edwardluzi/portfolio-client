@@ -91,4 +91,11 @@ public class Holding {
     public void setTotalChangePercentage(BigDecimal totalChangePercentage) {
         this.totalChangePercentage = totalChangePercentage;
     }
+
+    public Holding() {
+    }
+
+    public Holding(Long id) {
+        this.id = id;
+    }
 }

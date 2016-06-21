@@ -1,8 +1,8 @@
 package org.goldenroute.portfolioclient.rest;
 
 
-import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.text.TextUtils;
@@ -25,11 +25,11 @@ public abstract class RestAsyncTask<Params, Progress, Result> extends AsyncTask<
     private static final String TAG = RestAsyncTask.class.getName();
 
     private ProgressDialog mProgressDialog;
-    private Activity mParentActivity;
+    private Context mContext;
     private String mError;
 
-    protected Activity getParentActivity() {
-        return mParentActivity;
+    protected Context getContext() {
+        return mContext;
     }
 
     protected ProgressDialog getProgressDialog() {
@@ -40,11 +40,11 @@ public abstract class RestAsyncTask<Params, Progress, Result> extends AsyncTask<
         return mError;
     }
 
-    protected RestAsyncTask(Activity activity, boolean showDialog) {
-        mParentActivity = activity;
+    protected RestAsyncTask(Context context, boolean showDialog) {
+        mContext = context;
         mError = "";
         if (showDialog) {
-            mProgressDialog = new ProgressDialog(activity);
+            mProgressDialog = new ProgressDialog(context);
             mProgressDialog.setCancelable(false);
             mProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
@@ -59,7 +59,7 @@ public abstract class RestAsyncTask<Params, Progress, Result> extends AsyncTask<
     protected void onPreExecute() {
         super.onPreExecute();
         if (mProgressDialog != null) {
-            mProgressDialog.setMessage( mParentActivity.getString(R.string.message_please_wait));
+            mProgressDialog.setMessage(mContext.getString(R.string.message_please_wait));
             mProgressDialog.show();
         }
     }
@@ -112,7 +112,7 @@ public abstract class RestAsyncTask<Params, Progress, Result> extends AsyncTask<
         } else {
             mError = response.message();
             if (TextUtils.isEmpty(mError)) {
-                mError = mParentActivity.getString(R.string.message_unknown_error);
+                mError = mContext.getString(R.string.message_unknown_error);
             }
         }
 

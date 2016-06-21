@@ -243,7 +243,7 @@ public class PortfolioTransactionFragment extends RefreshableFragment implements
             if (success && mReturned != null) {
                 refresh();
             } else {
-                Toast.makeText(getParentActivity(),
+                Toast.makeText(getContext(),
                         String.format(Locale.getDefault(),
                                 getString(R.string.message_deleting_transaction_failed),
                                 getError()),

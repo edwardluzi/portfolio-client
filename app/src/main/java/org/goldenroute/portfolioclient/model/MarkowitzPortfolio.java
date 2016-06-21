@@ -6,7 +6,7 @@ public class MarkowitzPortfolio {
     private double expectedReturn;
     private double variance;
     private double standardDeviation;
-    private double riskfree;
+    private double riskFree;
     private double sharpe;
 
     public double[] getWeights() {
@@ -33,19 +33,19 @@ public class MarkowitzPortfolio {
         return standardDeviation * 100;
     }
 
-    public double getRiskfree() {
-        return riskfree;
+    public double getRiskFree() {
+        return riskFree;
     }
 
     public double getSharpe() {
         return sharpe;
     }
 
-    public MarkowitzPortfolio(double[] weights, double expectedReturn, double variance, double riskfree, double sharpe) {
+    public MarkowitzPortfolio(double[] weights, double expectedReturn, double variance, double riskFree, double sharpe) {
         this.weights = weights;
         this.expectedReturn = expectedReturn;
         this.variance = variance;
-        this.riskfree = riskfree;
+        this.riskFree = riskFree;
         this.sharpe = sharpe;
     }
 }

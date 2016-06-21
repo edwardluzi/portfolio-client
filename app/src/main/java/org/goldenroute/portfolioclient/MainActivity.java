@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import org.goldenroute.portfolioclient.dagger2.DaggerApplication;
 import org.goldenroute.portfolioclient.fragment.MainAlertsFragment;
 import org.goldenroute.portfolioclient.fragment.MainBaseFragment;
 import org.goldenroute.portfolioclient.fragment.MainListsFragment;
@@ -22,9 +23,12 @@ import org.goldenroute.portfolioclient.fragment.MainPortfolioFragment;
 import org.goldenroute.portfolioclient.model.Account;
 import org.goldenroute.portfolioclient.rest.RestAsyncTask;
 import org.goldenroute.portfolioclient.rest.RestOperations;
+import org.goldenroute.portfolioclient.services.RemoteService;
 import org.goldenroute.portfolioclient.utils.TopExceptionHandler;
 
 import java.util.Locale;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -47,9 +51,17 @@ public class MainActivity extends AppCompatActivity
 
     protected ActionBarDrawerToggle mDrawerToggle;
 
+    @Inject
+    protected RemoteService mRemoteService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ((DaggerApplication) getApplication())
+                .getComponent()
+                .inject(this);
+
         Thread.setDefaultUncaughtExceptionHandler(new TopExceptionHandler(this));
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
@@ -168,7 +180,7 @@ public class MainActivity extends AppCompatActivity
             if (success && mAccount != null) {
                 refresh(mAccount);
             } else {
-                Toast.makeText(getParentActivity(),
+                Toast.makeText(getContext(),
                         String.format(Locale.getDefault(), getString(R.string.message_retrieving_account_failed), getError()),
                         Toast.LENGTH_LONG).show();
             }

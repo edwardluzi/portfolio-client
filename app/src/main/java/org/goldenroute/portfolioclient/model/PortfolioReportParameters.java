@@ -2,7 +2,7 @@ package org.goldenroute.portfolioclient.model;
 
 public class PortfolioReportParameters {
 
-    private double riskfree;
+    private double riskFree;
     private double riskAversion;
     private boolean shortingAllowed;
     private String intervals;
@@ -11,22 +11,22 @@ public class PortfolioReportParameters {
     {
     }
 
-    public PortfolioReportParameters(double riskfree, double riskAversion, boolean shortingAllowed, String intervals)
+    public PortfolioReportParameters(double riskFree, double riskAversion, boolean shortingAllowed, String intervals)
     {
-        this.riskfree = riskfree;
+        this.riskFree = riskFree;
         this.riskAversion = riskAversion;
         this.shortingAllowed = shortingAllowed;
         this.intervals = intervals;
     }
 
-    public double getRiskfree()
+    public double getRiskFree()
     {
-        return riskfree;
+        return riskFree;
     }
 
-    public void setRiskfree(double riskfree)
+    public void setRiskFree(double riskFree)
     {
-        this.riskfree = riskfree;
+        this.riskFree = riskFree;
     }
 
     public double getRiskAversion()

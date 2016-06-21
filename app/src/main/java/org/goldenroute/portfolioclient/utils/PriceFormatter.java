@@ -9,13 +9,16 @@ import java.text.DecimalFormat;
 
 public class PriceFormatter {
     public static void setDecimalText(TextView textView, BigDecimal value) {
+        setDecimalText(textView, value, 2);
+    }
 
+    public static void setDecimalText(TextView textView, BigDecimal value, int decimals) {
         if (value != null) {
             DecimalFormat formatter = new DecimalFormat();
             formatter.setGroupingUsed(true);
             formatter.setGroupingSize(3);
-            formatter.setMinimumFractionDigits(2);
-            formatter.setMaximumFractionDigits(2);
+            formatter.setMinimumFractionDigits(decimals);
+            formatter.setMaximumFractionDigits(decimals);
             textView.setText(formatter.format(value));
         }
     }
@@ -53,6 +56,18 @@ public class PriceFormatter {
             } else {
                 textView.setTextColor(Color.RED);
             }
+        }
+    }
+
+    public static void setPercentageText(TextView textView, BigDecimal value) {
+        if (value != null) {
+            DecimalFormat formatter = new DecimalFormat();
+            formatter.setGroupingUsed(true);
+            formatter.setGroupingSize(3);
+            formatter.setMinimumFractionDigits(2);
+            formatter.setMaximumFractionDigits(2);
+            String text = formatter.format(value.multiply(BigDecimal.valueOf(100))) + "%";
+            textView.setText(text);
         }
     }
 }

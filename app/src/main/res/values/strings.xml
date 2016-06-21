@@ -145,5 +145,10 @@
     <string name="prompt_bing_to_wechat">Please type your binding key:</string>
     <string name="label_portfolio_analysis_efficient_frontier">Efficient Frontier</string>
     <string name="label_portfolio_analysis_allocation">Allocation</string>
+    <string name="title_close">Close</string>
+    <string name="label_weight">Weight</string>
+    <string name="label_return">Return</string>
+    <string name="label_standard_deviation">SD</string>
+    <string name="label_sharpe">Sharpe</string>
 
 </resources>

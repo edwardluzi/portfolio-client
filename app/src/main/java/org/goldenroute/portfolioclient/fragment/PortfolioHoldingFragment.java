@@ -28,7 +28,11 @@ public class PortfolioHoldingFragment extends RefreshableFragment {
     @Bind(R.id.list_view_holdings)
     protected ListView mListViewHoldings;
 
+    @Bind(R.id.list_view_holding_total)
+    protected ListView mListViewTotal;
+
     private HoldingListAdapter mHoldingListAdapter;
+    private HoldingListAdapter mTotalListAdapter;
 
     public PortfolioHoldingFragment() {
     }
@@ -59,6 +63,9 @@ public class PortfolioHoldingFragment extends RefreshableFragment {
         mHoldingListAdapter = new HoldingListAdapter(getActivity(), new ArrayList<Holding>());
         mListViewHoldings.setAdapter(mHoldingListAdapter);
 
+        mTotalListAdapter = new HoldingListAdapter(getActivity(), new ArrayList<Holding>());
+        mListViewTotal.setAdapter(mTotalListAdapter);
+
         return fragment;
     }
 
@@ -80,7 +87,23 @@ public class PortfolioHoldingFragment extends RefreshableFragment {
                         if (holdings != null) {
                             mHoldingListAdapter.getData().addAll(holdings);
                         }
+                        List<Holding> totals = new ArrayList<>();
+                        Holding total = new Holding(0L);
+
+                        total.setTicker("Total");
+                        total.setCost(portfolio.getCost());
+                        total.setValue(portfolio.getValue());
+                        total.setDailyChange(portfolio.getDailyChange());
+                        total.setDailyChangePercentage(portfolio.getDailyChangePercentage());
+                        total.setTotalChange(portfolio.getTotalChange());
+                        total.setTotalChangePercentage(portfolio.getTotalChangePercentage());
+                        totals.add(total);
+
+                        mTotalListAdapter.getData().clear();
+                        mTotalListAdapter.getData().addAll(totals);
+
                         mHoldingListAdapter.notifyDataSetChanged();
+                        mTotalListAdapter.notifyDataSetChanged();
                     }
                 }
             }

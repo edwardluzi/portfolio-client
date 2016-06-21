@@ -178,7 +178,7 @@ public class CreatePortfolioListActivity extends AppCompatActivity {
             mCreatePortfolioTask = null;
 
             if (success && mReturned != null) {
-                Toast.makeText(getParentActivity(),
+                Toast.makeText(getContext(),
                         getString(mPortfolioId == 0 ? R.string.message_adding_portfolio_succeeded : R.string.message_modifying_portfolio_succeeded), Toast.LENGTH_LONG).show();
                 Intent intent = new Intent();
                 intent.putExtra(IntentConstants.ARG_PID, mReturned.getId());
@@ -186,7 +186,7 @@ public class CreatePortfolioListActivity extends AppCompatActivity {
                 finish();
 
             } else {
-                Toast.makeText(getParentActivity(),
+                Toast.makeText(getContext(),
                         String.format(Locale.getDefault(),
                                 getString(mPortfolioId == 0 ? R.string.message_adding_portfolio_failed : R.string.message_modifying_portfolio_failed),
                                 getError()),

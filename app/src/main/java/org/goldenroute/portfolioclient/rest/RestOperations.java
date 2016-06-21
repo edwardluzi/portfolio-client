@@ -22,6 +22,7 @@ import org.goldenroute.portfolioclient.signin.SignInManager;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -75,6 +76,7 @@ public class RestOperations {
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.interceptors().add(interceptor);
+        builder.readTimeout(90, TimeUnit.SECONDS);
         OkHttpClient client = builder.build();
 
         Gson gson = new GsonBuilder()

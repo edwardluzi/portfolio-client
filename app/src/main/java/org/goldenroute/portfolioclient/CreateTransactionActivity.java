@@ -279,7 +279,7 @@ public class CreateTransactionActivity extends AppCompatActivity implements View
             super.onPostExecute(success);
             mAsyncTask = null;
             if (success && mReturned != null) {
-                Toast.makeText(getParentActivity(),
+                Toast.makeText(getContext(),
                         getString(mTransactionId == 0 ?
                                 R.string.message_adding_transaction_succeeded : R.string.message_modifying_transaction_succeeded),
                         Toast.LENGTH_LONG).show();
@@ -288,7 +288,7 @@ public class CreateTransactionActivity extends AppCompatActivity implements View
                 setResult(RESULT_OK, intent);
                 finish();
             } else {
-                Toast.makeText(getParentActivity(),
+                Toast.makeText(getContext(),
                         String.format(Locale.getDefault(),
                                 getString(mTransactionId == 0 ? R.string.message_adding_transaction_failed : R.string.message_modifying_transaction_failed),
                                 getError()),

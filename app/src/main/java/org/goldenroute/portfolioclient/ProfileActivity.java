@@ -171,12 +171,12 @@ public class ProfileActivity extends AppCompatActivity implements
         protected void onPostExecute(final Boolean success) {
             super.onPostExecute(success);
             if (success && mResult != null && mResult) {
-                Toast.makeText(getParentActivity(),
+                Toast.makeText(getContext(),
                         getString(R.string.message_binding_account_succeeded), Toast.LENGTH_LONG).show();
 
                 mButtonBindToWechat.setVisibility(View.GONE);
             } else {
-                Toast.makeText(getParentActivity(),
+                Toast.makeText(getContext(),
                         String.format(Locale.getDefault(),
                                 getString(R.string.message_binding_account_failed),
                                 getError()),

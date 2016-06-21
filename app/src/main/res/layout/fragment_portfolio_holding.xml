@@ -53,10 +53,27 @@
         android:id="@+id/list_view_holdings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/view_holding_divider"
         android:layout_alignParentBottom="true"
         android:layout_below="@+id/layout_column_header_underline_holding"
         android:choiceMode="singleChoice"
         android:footerDividersEnabled="true"
+        android:headerDividersEnabled="false" />
+
+    <View
+        android:id="@+id/view_holding_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@+id/list_view_holding_total"
+        android:background="@android:color/darker_gray" />
+
+    <ListView
+        android:id="@+id/list_view_holding_total"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:choiceMode="singleChoice"
+        android:footerDividersEnabled="false"
         android:headerDividersEnabled="false" />
 
 </RelativeLayout>

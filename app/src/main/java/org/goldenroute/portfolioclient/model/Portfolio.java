@@ -70,24 +70,48 @@ public class Portfolio {
         return value;
     }
 
+    public void setValue(BigDecimal value) {
+        this.value = value;
+    }
+
     public BigDecimal getCost() {
         return cost;
+    }
+
+    public void setCost(BigDecimal cost) {
+        this.cost = cost;
     }
 
     public BigDecimal getDailyChange() {
         return dailyChange;
     }
 
+    public void setDailyChange(BigDecimal dailyChange) {
+        this.dailyChange = dailyChange;
+    }
+
     public BigDecimal getDailyChangePercentage() {
         return dailyChangePercentage;
+    }
+
+    public void setDailyChangePercentage(BigDecimal dailyChangePercentage) {
+        this.dailyChangePercentage = dailyChangePercentage;
     }
 
     public BigDecimal getTotalChange() {
         return totalChange;
     }
 
+    public void setTotalChange(BigDecimal totalChange) {
+        this.totalChange = totalChange;
+    }
+
     public BigDecimal getTotalChangePercentage() {
         return totalChangePercentage;
+    }
+
+    public void setTotalChangePercentage(BigDecimal totalChangePercentage) {
+        this.totalChangePercentage = totalChangePercentage;
     }
 
     public List<Transaction> getTransactions() {
@@ -113,5 +137,12 @@ public class Portfolio {
             }
         }
         return null;
+    }
+
+    public Portfolio() {
+    }
+
+    public Portfolio(Long id) {
+        this.id = id;
     }
 }
